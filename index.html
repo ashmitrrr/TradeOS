@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeOS — AI Built for Tradies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --white:#FFFFFF; --off:#F7F4EF; --cream:#F0EBE1;
+  --black:#111111; --dark:#1C1C1C;
+  --orange:#E8521A; --orange2:#FF6B35;
+  --muted:#6B6560; --border:#E4DDD4; --green:#1A6B45;
+  --f:'Plus Jakarta Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);background:var(--white);color:var(--black);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 52px;height:68px;background:rgba(255,255,255,0.93);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.07);transition:height .3s}
+nav.slim{height:58px}
+.logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;color:var(--black);text-decoration:none;letter-spacing:-.03em}
+.logo-box{width:34px;height:34px;border-radius:8px;background:var(--orange);color:white;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .18s}
+.nav-links a:hover{color:var(--black)}
+.btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--f);font-weight:600;font-size:14px;text-decoration:none;border:none;border-radius:8px;cursor:pointer;transition:background .18s,transform .15s,box-shadow .18s}
+.btn-dark{background:var(--black);color:white;padding:10px 20px}
+.btn-dark:hover{background:#2a2a2a;transform:translateY(-1px)}
+.btn-orange{background:var(--orange);color:white;padding:14px 28px;font-size:15px;box-shadow:0 4px 18px rgba(232,82,26,.28)}
+.btn-orange:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,82,26,.35)}
+.btn-outline{background:transparent;color:var(--black);padding:14px 28px;font-size:15px;border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--black)}
+.btn-white-out{background:transparent;color:white;padding:14px 28px;font-size:15px;border:1.5px solid rgba(255,255,255,.3)}
+.btn-white-out:hover{border-color:rgba(255,255,255,.65)}
+
+/* HERO */
+.hero{padding:148px 52px 96px;display:grid;grid-template-columns:1fr 460px;gap:64px;align-items:center;min-height:100vh;background:var(--white);position:relative}
+.hero::after{content:'';position:absolute;top:0;right:0;bottom:0;width:48%;background:var(--off);z-index:0;border-radius:0 0 0 40px}
+.hero-left{position:relative;z-index:1}
+.hero-right{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--orange);margin-bottom:24px}
+.eyebrow-dot{width:7px;height:7px;background:var(--orange);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-size:clamp(44px,5.5vw,78px);font-weight:800;line-height:1.0;letter-spacing:-.035em;color:var(--black);margin-bottom:22px}
+h1 em{font-style:normal;color:var(--orange)}
+.hero-sub{font-size:17px;font-weight:400;line-height:1.7;color:var(--muted);max-width:460px;margin-bottom:38px}
+.hero-actions{display:flex;align-items:center;gap:14px;margin-bottom:52px}
+.hero-stats{display:flex;gap:40px;padding-top:36px;border-top:1px solid var(--border)}
+.hstat{display:flex;flex-direction:column;gap:3px}
+.hstat-n{font-size:28px;font-weight:800;letter-spacing:-.03em}
+.hstat-l{font-size:12px;color:var(--muted)}
+.hero-img-wrap{border-radius:20px;overflow:hidden;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.12)}
+.hero-img-wrap img{width:100%;height:440px;object-fit:cover;display:block}
+.hero-badge{position:absolute;bottom:20px;left:16px;right:16px;background:rgba(17,17,17,.88);backdrop-filter:blur(12px);border-radius:14px;padding:15px 18px;display:flex;align-items:center;gap:13px}
+.badge-icon{width:36px;height:36px;min-width:36px;background:var(--orange);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.badge-text strong{font-size:13px;font-weight:700;color:white;display:block}
+.badge-text span{font-size:11px;color:#888}
+.badge-check{color:#4CAF82;font-size:18px;font-weight:700;margin-left:auto}
+
+/* TICKER */
+.ticker{background:var(--black);padding:13px 0;overflow:hidden;white-space:nowrap}
+.ticker-inner{display:inline-flex;animation:scroll 24s linear infinite}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:12px;padding:0 24px;font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#444}
+.ticker-sep{color:var(--orange)}
+
+/* SECTIONS */
+section{padding:96px 52px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--orange);margin-bottom:14px;display:block}
+h2{font-size:clamp(32px,3.8vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1.06;color:var(--black);margin-bottom:14px}
+.sub{font-size:16px;font-weight:400;line-height:1.7;color:var(--muted);max-width:460px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;gap:32px}
+
+/* PROBLEM */
+.problem{background:var(--off)}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:48px}
+.prob-cards{display:flex;flex-direction:column;gap:14px}
+.prob-card{background:white;border-radius:14px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start;border:1px solid var(--border);transition:box-shadow .2s,transform .2s}
+.prob-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.06);transform:translateX(4px)}
+.prob-icon{font-size:22px;margin-top:2px;min-width:26px}
+.prob-card h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.prob-card p{font-size:13px;color:var(--muted);line-height:1.55}
+.prob-visual{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.1)}
+.prob-visual img{width:100%;height:460px;object-fit:cover;display:block}
+.prob-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,17,17,.72) 0%,transparent 55%)}
+.prob-caption{position:absolute;bottom:28px;left:28px;color:white}
+.prob-caption strong{font-size:34px;font-weight:800;letter-spacing:-.03em;display:block}
+.prob-caption span{font-size:14px;color:rgba(255,255,255,.7)}
+
+/* AGENTS */
+.agents{background:var(--white)}
+.agents-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.acard{border-radius:18px;padding:32px;position:relative;overflow:hidden;transition:transform .22s,box-shadow .22s}
+.acard:hover{transform:translateY(-5px);box-shadow:0 20px 48px rgba(0,0,0,.1)}
+.ac-dark{background:var(--dark);color:white}
+.ac-cream{background:var(--cream)}
+.ac-orange{background:#FFF0E8}
+.ac-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:18px;display:block}
+.ac-emoji{font-size:30px;margin-bottom:14px;display:block}
+.ac-name{font-size:24px;font-weight:800;letter-spacing:-.025em;line-height:1.1;margin-bottom:10px}
+.ac-dark .ac-name{color:white}
+.ac-tag{font-size:13px;line-height:1.6;color:var(--muted);margin-bottom:22px}
+.ac-dark .ac-tag{color:#888}
+.ac-price{font-size:28px;font-weight:800;letter-spacing:-.03em}
+.ac-dark .ac-price{color:white}
+.ac-price sub{font-size:13px;font-weight:400;color:var(--muted)}
+.ac-dark .ac-price sub{color:#777}
+.ac-feats{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:7px}
+.ac-feats li{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.ac-dark .ac-feats li{color:#999}
+.ac-feats li::before{content:'✓';font-weight:700;font-size:11px;color:var(--green)}
+.ac-dark .ac-feats li::before{color:var(--orange)}
+.ac-badge{position:absolute;top:20px;right:20px;background:var(--orange);color:white;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:100px}
+
+/* HOW */
+.how{background:var(--dark);color:white}
+.how h2{color:white}
+.how .sub{color:#777}
+.how-imgs{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:52px 0 18px}
+.how-img-card{position:relative;border-radius:16px;overflow:hidden}
+.how-img-card img{width:100%;height:270px;object-fit:cover;display:block;filter:brightness(.82)}
+.how-img-card-lbl{position:absolute;bottom:0;left:0;right:0;padding:44px 22px 22px;background:linear-gradient(to top,rgba(0,0,0,.72),transparent);color:white}
+.how-img-card-lbl h4{font-size:16px;font-weight:700;margin-bottom:4px}
+.how-img-card-lbl p{font-size:13px;color:rgba(255,255,255,.6)}
+.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#252525;border-radius:16px;overflow:hidden}
+.how-step{background:var(--dark);padding:30px 22px;transition:background .18s}
+.how-step:hover{background:#202020}
+.how-step-n{font-size:40px;font-weight:800;color:#242424;margin-bottom:14px;line-height:1}
+.how-step-icon{width:40px;height:40px;background:#202020;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:12px;border:1px solid #2a2a2a}
+.how-step h4{font-size:15px;font-weight:700;color:white;margin-bottom:5px}
+.how-step p{font-size:13px;color:#666;line-height:1.6}
+
+/* PROOF */
+.proof{background:var(--off)}
+.proof-imgs{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px;margin-bottom:44px}
+.proof-img{border-radius:14px;overflow:hidden}
+.proof-img img{width:100%;height:230px;object-fit:cover;display:block;transition:transform .3s}
+.proof-img:hover img{transform:scale(1.03)}
+.tcards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tcard{background:white;border-radius:16px;padding:26px;border:1px solid var(--border);transition:box-shadow .2s,transform .2s}
+.tcard:hover{box-shadow:0 12px 36px rgba(0,0,0,.07);transform:translateY(-3px)}
+.tcard-stars{color:var(--orange);font-size:13px;letter-spacing:2px;margin-bottom:12px}
+.tcard-q{font-size:14px;line-height:1.75;color:var(--dark);margin-bottom:18px;font-weight:400}
+.tcard-q strong{font-weight:600}
+.tcard-author{display:flex;align-items:center;gap:10px}
+.tcard-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.av1{background:#FFF0E8;color:var(--orange)}
+.av2{background:#E8F5EE;color:var(--green)}
+.av3{background:#E8EEF8;color:#2D55AA}
+.tcard-info h5{font-size:13px;font-weight:700}
+.tcard-info p{font-size:12px;color:var(--muted)}
+
+/* PRICING */
+.pricing{background:white}
+.pricing .sec-head{justify-content:center;flex-direction:column;align-items:center;text-align:center}
+.pricing .sub{text-align:center;margin:0 auto}
+.toggle{display:flex;background:var(--off);border-radius:100px;padding:4px;margin:24px auto 48px;width:fit-content}
+.toggle button{font-family:var(--f);font-size:13px;font-weight:600;padding:9px 22px;border-radius:100px;border:none;cursor:pointer;transition:background .18s,color .18s;background:transparent;color:var(--muted)}
+.toggle button.on{background:var(--black);color:white}
+.pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pcard{border-radius:18px;padding:30px;border:1.5px solid var(--border);transition:transform .2s,box-shadow .2s,border-color .2s}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.07);border-color:var(--orange)}
+.pcard.featured{background:var(--dark);border-color:var(--dark);color:white}
+.pcard.featured:hover{border-color:var(--orange)}
+.pcard-plan{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--orange);margin-bottom:14px;display:block}
+.pcard-price{font-size:44px;font-weight:800;letter-spacing:-.04em}
+.pcard.featured .pcard-price{color:white}
+.pcard-per{font-size:13px;color:var(--muted);margin-bottom:16px}
+.pcard.featured .pcard-per{color:#666}
+.pcard-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:22px}
+.pcard.featured .pcard-desc{color:#888}
+.pcard-btn{width:100%;font-family:var(--f);font-size:14px;font-weight:600;padding:13px;border-radius:9px;border:1.5px solid var(--black);background:transparent;color:var(--black);cursor:pointer;margin-bottom:22px;transition:background .18s,color .18s}
+.pcard-btn:hover{background:var(--black);color:white}
+.pcard.featured .pcard-btn{background:var(--orange);border-color:var(--orange);color:white}
+.pcard.featured .pcard-btn:hover{background:var(--orange2)}
+.pcard-feats{list-style:none;display:flex;flex-direction:column;gap:8px}
+.pcard-feats li{font-size:13px;color:var(--muted);display:flex;gap:9px;align-items:center}
+.pcard.featured .pcard-feats li{color:#888}
+.pcard-feats li::before{content:'✓';font-weight:700;font-size:11px;color:var(--green)}
+.pcard.featured .pcard-feats li::before{color:var(--orange)}
+
+/* CTA BAND */
+.band{background:var(--orange);padding:60px 52px;display:flex;justify-content:space-between;align-items:center;gap:32px}
+.band h3{font-size:26px;font-weight:800;color:white;letter-spacing:-.02em;max-width:500px;line-height:1.25}
+.band-btn{background:white;color:var(--orange);padding:14px 28px;font-family:var(--f);font-size:15px;font-weight:700;border:none;border-radius:9px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;gap:7px;align-items:center;transition:transform .18s,box-shadow .18s}
+.band-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+
+/* FOOTER */
+footer{background:var(--black);color:#555;padding:52px 52px 28px}
+.footer-top{display:flex;justify-content:space-between;gap:56px;padding-bottom:44px;border-bottom:1px solid #1f1f1f;margin-bottom:24px}
+.footer-brand .logo{color:white;margin-bottom:12px}
+.footer-brand p{font-size:13px;color:#555;max-width:240px;line-height:1.65}
+.footer-cols{display:flex;gap:52px}
+.fcol h5{font-size:11px;font-weight:700;color:#333;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px}
+.fcol a{display:block;font-size:13px;color:#555;text-decoration:none;margin-bottom:9px;transition:color .18s}
+.fcol a:hover{color:#aaa}
+.footer-bot{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.footer-bot p{color:#333}
+.made{background:#181818;border:1px solid #222;border-radius:100px;padding:5px 14px;font-size:11px;color:#444}
+.made span{color:var(--orange)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:0 24px}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:120px 24px 72px}
+  .hero::after{display:none}
+  .hero-right{display:none}
+  section{padding:68px 24px}
+  .prob-grid,.agents-grid,.how-imgs,.how-steps,.proof-imgs,.tcards,.pcards{grid-template-columns:1fr}
+  .sec-head{flex-direction:column;align-items:flex-start}
+  .hero-stats{flex-wrap:wrap;gap:24px}
+  .band{flex-direction:column;text-align:center}
+  .footer-top{flex-direction:column}
+  .footer-cols{flex-wrap:wrap;gap:28px}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="logo"><div class="logo-box">T</div>TradeOS</a>
+  <div class="nav-links">
+    <a href="#agents">Agents</a>
+    <a href="#how">How it works</a>
+    <a href="#proof">Reviews</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#" class="btn btn-dark">Get early access →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="eyebrow"><div class="eyebrow-dot"></div>Built in Sydney, Australia</div>
+    <h1>AI built for<br>people who<br><em>work hard.</em></h1>
+    <p class="hero-sub">TradeOS gives Australian tradies an AI that handles invoices, safety docs, and quotes — so you spend more time on the tools, less time on the paperwork.</p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn btn-orange">Start free trial →</a>
+      <a href="#agents" class="btn btn-outline">See the agents</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-n">45+</span><span class="hstat-l">mins saved per day</span></div>
+      <div class="hstat"><span class="hstat-n">30s</span><span class="hstat-l">to send an invoice</span></div>
+      <div class="hstat"><span class="hstat-n">$10K</span><span class="hstat-l">compliance fine avoided</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=900&q=82" alt="Tradie working on site">
+      <div class="hero-badge">
+        <div class="badge-icon">🎙️</div>
+        <div class="badge-text">
+          <strong>Invoice sent to client</strong>
+          <span>Generated in 28 seconds · $407.00</span>
+        </div>
+        <div class="badge-check">✓</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item"><span class="ticker-sep">→</span> Invoice in 30 seconds</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> SWMS in 2 minutes</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Quote before you leave the driveway</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Built for Australian tradies</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> SafeWork NSW compliant</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Xero integrated</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Invoice in 30 seconds</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> SWMS in 2 minutes</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Quote before you leave the driveway</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Built for Australian tradies</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> SafeWork NSW compliant</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Xero integrated</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem rv" id="problem">
+  <span class="tag">The problem</span>
+  <h2>You didn't start a trade<br>to do paperwork at 9pm.</h2>
+  <div class="prob-grid">
+    <div class="prob-cards">
+      <div class="prob-card rv d1">
+        <span class="prob-icon">🧾</span>
+        <div>
+          <h4>Manual invoicing kills your evenings</h4>
+          <p>45+ minutes every night writing up invoices, chasing payments, logging jobs into Xero — after a full day on the tools.</p>
+        </div>
+      </div>
+      <div class="prob-card rv d2">
+        <span class="prob-icon">⚠️</span>
+        <div>
+          <h4>Compliance paperwork is a legal minefield</h4>
+          <p>SafeWork NSW/VIC requires SWMS, hazard logs, toolbox talk records. Miss one and you're looking at a $10,000+ fine.</p>
+        </div>
+      </div>
+      <div class="prob-card rv d3">
+        <span class="prob-icon">⏳</span>
+        <div>
+          <h4>Slow quotes = losing jobs to competitors</h4>
+          <p>You go home, spend an hour building a quote. By the time you send it, the client has already hired someone else.</p>
+        </div>
+      </div>
+    </div>
+    <div class="prob-visual rv d2">
+      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=82" alt="Builder on construction site">
+      <div class="prob-overlay"></div>
+      <div class="prob-caption">
+        <strong>6 hrs</strong>
+        <span>lost to paperwork every week</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS -->
+<section class="agents" id="agents">
+  <div class="sec-head rv">
+    <div><span class="tag">The solution</span><h2>Three AI agents.<br>One operating system.</h2></div>
+    <p class="sub">Each agent handles one major pain point. Together they run your entire back-office while you focus on the job.</p>
+  </div>
+  <div class="agents-grid">
+    <div class="acard ac-dark rv d1">
+      <div class="ac-badge">Most popular</div>
+      <span class="ac-label">Agent 01</span>
+      <span class="ac-emoji">🎙️</span>
+      <h3 class="ac-name">Admin Agent</h3>
+      <p class="ac-tag">Talk into your phone for 30 seconds. Invoice sent, job logged, payment scheduled.</p>
+      <div class="ac-price">$69<sub>/month</sub></div>
+      <ul class="ac-feats">
+        <li>Voice-to-invoice in 30 seconds</li>
+        <li>Auto emails the client</li>
+        <li>Xero &amp; MYOB sync</li>
+        <li>Payment follow-up SMS</li>
+      </ul>
+    </div>
+    <div class="acard ac-cream rv d2">
+      <span class="ac-label">Agent 02</span>
+      <span class="ac-emoji">🦺</span>
+      <h3 class="ac-name">Safety Agent</h3>
+      <p class="ac-tag">Generate a compliant SWMS in 2 minutes. Never risk a $10K fine over paperwork again.</p>
+      <div class="ac-price">$199<sub>/month</sub></div>
+      <ul class="ac-feats">
+        <li>SafeWork NSW/VIC compliant SWMS</li>
+        <li>Photo → hazard report instantly</li>
+        <li>Toolbox talk logs</li>
+        <li>Site manager dashboard</li>
+      </ul>
+    </div>
+    <div class="acard ac-orange rv d3">
+      <span class="ac-label">Agent 03</span>
+      <span class="ac-emoji">📋</span>
+      <h3 class="ac-name">Quote Agent</h3>
+      <p class="ac-tag">Send the quote before you leave the driveway. Win more jobs, faster.</p>
+      <div class="ac-price">$79<sub>/month</sub></div>
+      <ul class="ac-feats">
+        <li>Voice-to-quote while on site</li>
+        <li>Branded PDF sent instantly</li>
+        <li>Stripe payment link in quote</li>
+        <li>Current material pricing built-in</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how rv" id="how">
+  <div class="sec-head">
+    <div><span class="tag" style="color:#666">How it works</span><h2>Works the way tradies actually work.</h2></div>
+    <p class="sub">No typing, no logins, no desktop. Speak into your phone and TradeOS handles everything else.</p>
+  </div>
+  <div class="how-imgs">
+    <div class="how-img-card rv d1">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=82" alt="Plumber working">
+      <div class="how-img-card-lbl"><h4>Finish the job</h4><p>You do what you do best. Work with your hands.</p></div>
+    </div>
+    <div class="how-img-card rv d2">
+      <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=900&q=82" alt="Tradie on phone">
+      <div class="how-img-card-lbl"><h4>Speak it, done</h4><p>30-second voice memo. Everything sorted before you drive away.</p></div>
+    </div>
+  </div>
+  <div class="how-steps">
+    <div class="how-step rv d1"><div class="how-step-n">01</div><div class="how-step-icon">🎙️</div><h4>Speak it</h4><p>After finishing a job, speak a quick voice memo. No typing, no forms.</p></div>
+    <div class="how-step rv d2"><div class="how-step-n">02</div><div class="how-step-icon">🤖</div><h4>AI processes</h4><p>TradeOS understands trade language — extracts job details, materials, and labour automatically.</p></div>
+    <div class="how-step rv d3"><div class="how-step-n">03</div><div class="how-step-icon">📄</div><h4>Doc generated</h4><p>Invoice, SWMS, or quote generated instantly. Professional, branded, and compliant.</p></div>
+    <div class="how-step rv d3"><div class="how-step-n">04</div><div class="how-step-icon">✅</div><h4>Sent &amp; logged</h4><p>Sent to client automatically. Logged to Xero. Payment follow-up scheduled. Done.</p></div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof rv" id="proof">
+  <div class="sec-head">
+    <div><span class="tag">Real tradies</span><h2>Tradies who got their<br>evenings back.</h2></div>
+    <p class="sub">Beta feedback from real tradies who tested TradeOS before launch.</p>
+  </div>
+  <div class="proof-imgs">
+    <div class="proof-img rv d1"><img src="https://images.unsplash.com/photo-1590579491624-f98f36d4c763?w=800&q=82" alt="Electrician at work"></div>
+    <div class="proof-img rv d2"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=82" alt="Builder on site"></div>
+    <div class="proof-img rv d3"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=82" alt="Worker outdoors"></div>
+  </div>
+  <div class="tcards">
+    <div class="tcard rv d1">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-q">"I used to spend an hour after work doing invoices. Now I talk into my phone on the way to the car and <strong>it's all done before I get home.</strong>"</p>
+      <div class="tcard-author"><div class="tcard-av av1">D</div><div class="tcard-info"><h5>Dave M.</h5><p>Plumber · Penrith, NSW</p></div></div>
+    </div>
+    <div class="tcard rv d2">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-q">"The SWMS generator alone is worth it. What used to take me 40 minutes on a Friday afternoon <strong>now takes 2 minutes on site.</strong> Compliance sorted."</p>
+      <div class="tcard-author"><div class="tcard-av av2">S</div><div class="tcard-info"><h5>Sam K.</h5><p>Site Foreman · Melbourne, VIC</p></div></div>
+    </div>
+    <div class="tcard rv d3">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-q">"Sent a quote while still standing in the client's garden. <strong>They accepted it before I'd even driven away.</strong> Closed 3 extra jobs that week."</p>
+      <div class="tcard-author"><div class="tcard-av av3">T</div><div class="tcard-info"><h5>Tim R.</h5><p>Landscaper · Brisbane, QLD</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="sec-head rv"><span class="tag">Pricing</span><h2>Simple. No surprises.</h2><p class="sub">Pick the agent you need, or get all three at a discount. Cancel anytime.</p></div>
+  <div class="toggle rv">
+    <button class="on" id="mBtn" onclick="setM()">Monthly</button>
+    <button id="aBtn" onclick="setA()">Annual &nbsp;<span style="color:var(--orange);font-size:11px;font-weight:700">Save 20%</span></button>
+  </div>
+  <div class="pcards">
+    <div class="pcard rv d1">
+      <span class="pcard-plan">Admin Agent</span>
+      <div class="pcard-price" data-m="$69" data-a="$55">$69</div>
+      <div class="pcard-per">per month · per tradie</div>
+      <p class="pcard-desc">Perfect for solo tradies who want to end the evening admin grind for good.</p>
+      <button class="pcard-btn">Start free trial →</button>
+      <ul class="pcard-feats"><li>Voice-to-invoice in 30 seconds</li><li>Auto email to client</li><li>Xero &amp; MYOB integration</li><li>Payment follow-up SMS</li><li>Job history dashboard</li></ul>
+    </div>
+    <div class="pcard featured rv d2">
+      <span class="pcard-plan">All Three Agents</span>
+      <div class="pcard-price" data-m="$249" data-a="$199">$249</div>
+      <div class="pcard-per">per month · full suite</div>
+      <p class="pcard-desc">Admin + Safety + Quote. Everything you need to run your trade business on autopilot.</p>
+      <button class="pcard-btn">Start free trial →</button>
+      <ul class="pcard-feats"><li>All Admin Agent features</li><li>SWMS generator (SafeWork compliant)</li><li>Hazard photo reporting</li><li>Voice-to-quote on site</li><li>Stripe payment link in quotes</li><li>Priority support</li></ul>
+    </div>
+    <div class="pcard rv d3">
+      <span class="pcard-plan">Safety Agent</span>
+      <div class="pcard-price" data-m="$199" data-a="$159">$199</div>
+      <div class="pcard-per">per month · per site</div>
+      <p class="pcard-desc">For site foremen who need compliance handled without the paperwork grind.</p>
+      <button class="pcard-btn">Start free trial →</button>
+      <ul class="pcard-feats"><li>SWMS in 2 minutes</li><li>Photo to hazard report</li><li>Toolbox talk logs</li><li>SafeWork NSW/VIC compliant</li><li>Site manager dashboard</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- BAND -->
+<div class="band rv">
+  <h3>Ready to get your evenings back?<br>Start free — no credit card needed.</h3>
+  <a href="#" class="band-btn">Get early access →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo"><div class="logo-box">T</div>TradeOS</a>
+      <p>AI built for people who work with their hands, not their keyboards. Made in Sydney 🇦🇺</p>
+    </div>
+    <div class="footer-cols">
+      <div class="fcol"><h5>Product</h5><a href="#agents">Admin Agent</a><a href="#agents">Safety Agent</a><a href="#agents">Quote Agent</a><a href="#pricing">Pricing</a></div>
+      <div class="fcol"><h5>Company</h5><a href="#">About</a><a href="#">Blog</a><a href="#">Contact</a></div>
+      <div class="fcol"><h5>Legal</h5><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <p>© 2026 TradeOS. All rights reserved.</p>
+    <div class="made">Built with <span>♥</span> in Sydney</div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{ document.getElementById('nav').classList.toggle('slim',scrollY>40); });
+const obs=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); }); },{threshold:0.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+function setM(){document.getElementById('mBtn').classList.add('on');document.getElementById('aBtn').classList.remove('on');document.querySelectorAll('.pcard-price').forEach(e=>e.textContent=e.dataset.m);}
+function setA(){document.getElementById('aBtn').classList.add('on');document.getElementById('mBtn').classList.remove('on');document.querySelectorAll('.pcard-price').forEach(e=>e.textContent=e.dataset.a);}
+</script>
+</body>
+</html>
