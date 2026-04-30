@@ -1,0 +1,14 @@
+# Internal MD context files
+md files/
+**/tradeos_context.md
+
+# API keys
+**/.env
+.env
+
+# Dependencies
+**/node_modules/
+
+# System
+.DS_Store
+dist/
