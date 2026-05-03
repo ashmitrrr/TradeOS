@@ -101,16 +101,19 @@ export default function VoiceRecorder({ clientName, onRecorded, onTyped, onBack 
         </>
       )}
 
-      <button
-        className={`mic-button${isRecording ? ' recording' : ''}`}
-        onPointerDown={(e) => { e.preventDefault(); startRecording(); }}
-        onPointerUp={(e) => { e.preventDefault(); stopRecording(); }}
-        onPointerCancel={(e) => { e.preventDefault(); stopRecording(); }}
-        style={isRecording ? {} : { marginTop: isRecording ? '16px' : '32px' }}
-      >
-        <span className="mic-icon" role="img" aria-label="Microphone">🎙</span>
-        <span>{isRecording ? 'Release to Send' : 'Hold to Record'}</span>
-      </button>
+      <div className="mic-wrap">
+        {isRecording && <div className="mic-ring mic-ring--1" />}
+        {isRecording && <div className="mic-ring mic-ring--2" />}
+        <button
+          className={`mic-button${isRecording ? ' recording' : ''}`}
+          onPointerDown={(e) => { e.preventDefault(); startRecording(); }}
+          onPointerUp={(e) => { e.preventDefault(); stopRecording(); }}
+          onPointerCancel={(e) => { e.preventDefault(); stopRecording(); }}
+        >
+          <span className="mic-icon" role="img" aria-label="Microphone">🎙</span>
+          <span>{isRecording ? 'Release to Send' : 'Hold to Record'}</span>
+        </button>
+      </div>
 
       {!isRecording && (
         <>
@@ -123,6 +126,7 @@ export default function VoiceRecorder({ clientName, onRecorded, onTyped, onBack 
             value={typedText}
             onChange={(e) => setTypedText(e.target.value)}
           />
+          <p className="textarea-hint">Be specific — mention size, materials, location</p>
 
           <button
             className="btn btn-primary"

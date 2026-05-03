@@ -1,6 +1,8 @@
+// Changed: Accept tradieProfile (logo, businessName, paymentTerms),
+//          show logo in PDF header, use edited line items, add BlueCrewAI footer
 import puppeteer from 'puppeteer';
 
-export async function generatePDF({ quoteData, clientName, clientEmail, quoteId, quoteDate }) {
+export async function generatePDF({ quoteData, clientName, clientEmail, quoteId, quoteDate, tradieProfile }) {
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'], // Required for Railway/Docker
@@ -8,7 +10,7 @@ export async function generatePDF({ quoteData, clientName, clientEmail, quoteId,
 
   try {
     const page = await browser.newPage();
-    const html = buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate });
+    const html = buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate, tradieProfile });
 
     await page.setContent(html, { waitUntil: 'networkidle0' });
 
@@ -28,7 +30,11 @@ function fmt(n) {
   return Number(n).toFixed(2);
 }
 
-function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate }) {
+function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate, tradieProfile }) {
+  const businessName = tradieProfile?.businessName || process.env.BUSINESS_NAME || 'TradeOS';
+  const paymentTerms = tradieProfile?.paymentTerms || '14 days';
+  const logoBase64 = tradieProfile?.logoBase64 || null;
+
   const expiry = new Date();
   expiry.setDate(expiry.getDate() + (quoteData.validDays || 30));
   const expiryStr = expiry.toLocaleDateString('en-AU', {
@@ -46,6 +52,20 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
       </tr>`
     )
     .join('');
+
+  // Build the logo/brand section for the header
+  const brandSection = logoBase64
+    ? `<div style="display:flex;align-items:center;gap:14px;">
+         <img src="${logoBase64}" alt="${businessName}" style="max-height:60px;width:auto;border-radius:6px;" />
+         <div>
+           <div class="brand">${businessName}</div>
+           <div class="brand-sub">Professional Trade Quoting</div>
+         </div>
+       </div>`
+    : `<div>
+         <div class="brand">${businessName}</div>
+         <div class="brand-sub">Professional Trade Quoting</div>
+       </div>`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -68,25 +88,25 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
     justify-content: space-between;
     align-items: center;
   }
-  .brand { color: #E8521A; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+  .brand { color: #1B6AE4; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
   .brand-sub { color: #888; font-size: 10px; margin-top: 2px; }
   .quote-badge { text-align: right; }
   .quote-badge h2 { color: #fff; font-size: 20px; font-weight: 700; letter-spacing: 2px; }
-  .quote-badge .qid { color: #E8521A; font-size: 11px; margin-top: 4px; font-weight: 600; }
+  .quote-badge .qid { color: #1B6AE4; font-size: 11px; margin-top: 4px; font-weight: 600; }
 
   /* ─── Body ─── */
   .body { padding: 28px 32px; }
 
   /* ─── Meta grid ─── */
   .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #e8e8e8; }
-  .meta-block h3 { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #E8521A; margin-bottom: 6px; font-weight: 700; }
+  .meta-block h3 { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #1B6AE4; margin-bottom: 6px; font-weight: 700; }
   .meta-block .main { font-size: 13px; font-weight: 700; }
   .meta-block .sub { font-size: 11px; color: #666; }
 
   /* ─── Job summary callout ─── */
   .summary-box {
-    background: #fdf4f0;
-    border-left: 4px solid #E8521A;
+    background: #EBF0FB;
+    border-left: 4px solid #1B6AE4;
     padding: 12px 16px;
     margin-bottom: 22px;
     border-radius: 0 4px 4px 0;
@@ -98,7 +118,7 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
   /* ─── Line items table ─── */
   table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
   thead th {
-    background: #E8521A;
+    background: #1B6AE4;
     color: #fff;
     padding: 9px 12px;
     text-align: left;
@@ -125,7 +145,7 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
     padding-top: 8px;
     color: #1a1a1a;
   }
-  .total-row.grand span:last-child { color: #E8521A; }
+  .total-row.grand span:last-child { color: #1B6AE4; }
 
   /* ─── Notes ─── */
   .notes { margin-top: 28px; padding-top: 20px; border-top: 1px solid #e8e8e8; }
@@ -141,16 +161,13 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
     border-top: 1px solid #eee;
     padding-top: 14px;
   }
-  .footer strong { color: #E8521A; }
+  .footer strong { color: #1B6AE4; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div>
-    <div class="brand">TradeOS</div>
-    <div class="brand-sub">Professional Trade Quoting</div>
-  </div>
+  ${brandSection}
   <div class="quote-badge">
     <h2>QUOTE</h2>
     <div class="qid">${quoteId}</div>
@@ -167,8 +184,8 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
     </div>
     <div class="meta-block">
       <h3>From</h3>
-      <div class="main">[Your Business Name]</div>
-      <div class="sub">[Your Phone] · [Your Email]</div>
+      <div class="main">${businessName}</div>
+      <div class="sub">Payment terms: ${paymentTerms}</div>
     </div>
     <div class="meta-block">
       <h3>Quote Date</h3>
@@ -226,7 +243,7 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
   </div>` : ''}
 
   <div class="footer">
-    Quote generated by <strong>TradeOS</strong> · tradeos.com.au ·
+    Quote generated with <strong>BlueCrewAI</strong> · bluecrewai.com ·
     This quote is valid for ${quoteData.validDays || 30} days from the date of issue.
     All prices in AUD and include GST where indicated.
   </div>

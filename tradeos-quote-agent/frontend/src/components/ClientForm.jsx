@@ -1,6 +1,8 @@
+// Changed: Added "Edit profile" link, updated button states per spec
+// (disabled: grey bg + muted text, enabled: blue bg + glow)
 import { useState } from 'react';
 
-export default function ClientForm({ onSubmit }) {
+export default function ClientForm({ onSubmit, onEditProfile, tradieProfile }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -14,15 +16,32 @@ export default function ClientForm({ onSubmit }) {
 
   return (
     <div>
-      <h1>New Quote</h1>
+      <div className="form-header-row">
+        <h1>
+          <span className="heading-icon">⚡</span>
+          New Quote
+        </h1>
+        {tradieProfile && (
+          <button className="edit-profile-link" onClick={onEditProfile}>
+            Edit profile
+          </button>
+        )}
+      </div>
       <p className="subheading">
         Enter your client's details, then you'll record the job description.
       </p>
 
+      {tradieProfile && (
+        <div className="profile-badge">
+          <span className="profile-badge-icon">🔧</span>
+          <span>{tradieProfile.businessName} · {tradieProfile.trade} · ${tradieProfile.labourRate}/hr</span>
+        </div>
+      )}
+
       <div className="card">
         <form onSubmit={handleSubmit}>
           <div className="field">
-            <label htmlFor="client-name">Client Name</label>
+            <label htmlFor="client-name">Client Name <span className="required">*</span></label>
             <input
               id="client-name"
               type="text"
@@ -35,7 +54,7 @@ export default function ClientForm({ onSubmit }) {
           </div>
 
           <div className="field">
-            <label htmlFor="client-email">Client Email</label>
+            <label htmlFor="client-email">Client Email <span className="required">*</span></label>
             <input
               id="client-email"
               type="email"
@@ -50,17 +69,17 @@ export default function ClientForm({ onSubmit }) {
 
           <button
             type="submit"
-            className="btn btn-primary"
+            className={`btn ${isValid ? 'btn-primary' : 'btn-disabled'}`}
             disabled={!isValid}
             style={{ marginTop: '8px' }}
           >
-            Next — Record Job
+            {isValid ? 'Next — Record Job →' : 'Fill in details above'}
           </button>
         </form>
       </div>
 
-      <p style={{ fontSize: '13px', color: '#999', textAlign: 'center' }}>
-        The quote PDF will be emailed directly to your client.
+      <p className="form-footnote">
+        📧 Quote PDF emailed to your client instantly
       </p>
     </div>
   );
