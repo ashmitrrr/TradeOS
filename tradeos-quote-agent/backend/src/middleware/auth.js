@@ -1,10 +1,5 @@
 // Auth middleware — verifies Supabase JWT from Authorization header
-import { createClient } from '@supabase/supabase-js';
-
-const supabase =
-  process.env.SUPABASE_URL && process.env.SUPABASE_KEY
-    ? createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
-    : null;
+import supabase from '../lib/supabaseClient.js';
 
 export async function requireAuth(req, res, next) {
   // If Supabase not configured, skip auth (dev fallback)

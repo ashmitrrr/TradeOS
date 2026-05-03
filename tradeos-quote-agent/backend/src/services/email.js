@@ -8,9 +8,20 @@ function fmt(n) {
   return Number(n).toFixed(2);
 }
 
+// HTML-escape user input to prevent injection
+function esc(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 export async function sendQuoteEmail({ clientName, clientEmail, quoteData, pdfBuffer, quoteId, businessName }) {
   const fromEmail = process.env.FROM_EMAIL || 'quotes@bluecrewai.com';
-  const biz = businessName || process.env.BUSINESS_NAME || 'TradeOS';
+  const biz = esc(businessName || process.env.BUSINESS_NAME || 'TradeOS');
 
   const html = `
 <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;">
@@ -22,7 +33,7 @@ export async function sendQuoteEmail({ clientName, clientEmail, quoteData, pdfBu
   <div style="padding:32px;">
     <h2 style="color:#1a1a1a;font-size:20px;margin-bottom:16px;">Your Quote is Ready</h2>
 
-    <p style="color:#444;line-height:1.6;margin-bottom:12px;">Hi ${clientName},</p>
+    <p style="color:#444;line-height:1.6;margin-bottom:12px;">Hi ${esc(clientName)},</p>
     <p style="color:#444;line-height:1.6;margin-bottom:24px;">
       Thank you for your enquiry. Please find your quote attached to this email (PDF).
     </p>
@@ -44,7 +55,7 @@ export async function sendQuoteEmail({ clientName, clientEmail, quoteData, pdfBu
       </table>
     </div>
 
-    <p style="color:#444;line-height:1.6;margin-bottom:24px;">${quoteData.jobSummary}</p>
+    <p style="color:#444;line-height:1.6;margin-bottom:24px;">${esc(quoteData.jobSummary)}</p>
 
     <p style="color:#444;line-height:1.6;">
       If you have any questions about this quote, please get in touch.<br><br>

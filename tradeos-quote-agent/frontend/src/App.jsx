@@ -66,6 +66,23 @@ export default function App() {
     return token ? { Authorization: `Bearer ${token}` } : {};
   };
 
+  // Wrapper: auto-logout on 401 (expired session)
+  const authFetch = async (url, options = {}) => {
+    const res = await fetch(url, {
+      ...options,
+      headers: { ...options.headers, ...getAuthHeaders() },
+    });
+    if (res.status === 401) {
+      // Session expired — force re-login
+      if (supabase) await supabase.auth.signOut();
+      setSession(null);
+      setTradieProfile(null);
+      setScreen('form');
+      throw new Error('Session expired — please sign in again.');
+    }
+    return res;
+  };
+
   // ── Splash screen timer ──
   useEffect(() => {
     const fadeTimer = setTimeout(() => setSplashFading(true), 1700);
@@ -104,9 +121,7 @@ export default function App() {
     }
 
     setProfileLoading(true);
-    fetch(`${API_BASE}/api/profile`, {
-      headers: getAuthHeaders(),
-    })
+    authFetch(`${API_BASE}/api/profile`)
       .then((r) => r.json())
       .then((data) => {
         if (data.profile && data.profile.business_name) {
@@ -161,9 +176,8 @@ export default function App() {
       const formData = new FormData();
       formData.append('audio', audioBlob, 'recording.webm');
 
-      const transcribeRes = await fetch(`${API_BASE}/api/transcribe`, {
+      const transcribeRes = await authFetch(`${API_BASE}/api/transcribe`, {
         method: 'POST',
-        headers: getAuthHeaders(),
         body: formData,
       });
 
@@ -176,9 +190,9 @@ export default function App() {
 
       setScreen('generating');
 
-      const quoteRes = await fetch(`${API_BASE}/api/generate-quote`, {
+      const quoteRes = await authFetch(`${API_BASE}/api/generate-quote`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ transcript, tradieProfile }),
       });
 
@@ -202,9 +216,9 @@ export default function App() {
     try {
       setScreen('generating');
 
-      const quoteRes = await fetch(`${API_BASE}/api/generate-quote`, {
+      const quoteRes = await authFetch(`${API_BASE}/api/generate-quote`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ transcript, tradieProfile }),
       });
 
@@ -231,9 +245,9 @@ export default function App() {
     try {
       setScreen('sending');
 
-      const sendRes = await fetch(`${API_BASE}/api/send-quote`, {
+      const sendRes = await authFetch(`${API_BASE}/api/send-quote`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           quoteData: editedQuote,
           clientName: name,

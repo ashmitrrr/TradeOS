@@ -1,6 +1,5 @@
-// Changed: All routes protected by requireAuth middleware.
-//          Added GET/PUT /api/profile endpoints. Quotes saved with user_id.
-//          GET /api/quotes queries by user_id instead of businessName.
+// Changed: Added input validation (field lengths, transcript cap),
+//          HTML escaping for XSS protection. All routes protected by requireAuth.
 import express from 'express';
 import multer from 'multer';
 import { requireAuth } from '../middleware/auth.js';
@@ -14,12 +13,26 @@ const router = express.Router();
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 25 * 1024 * 1024 },
+  limits: { fileSize: 25 * 1024 * 1024 }, // 25 MB max audio
 });
+
+// ── Validation helpers ──
+
+const MAX_TRANSCRIPT_LENGTH = 10000; // ~2500 words
+const MAX_FIELD_LENGTH = 500;
+const MAX_LOGO_SIZE = 500000; // ~500KB base64
+
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function sanitizeString(str, maxLen = MAX_FIELD_LENGTH) {
+  if (typeof str !== 'string') return '';
+  return str.trim().slice(0, maxLen);
+}
 
 // ── Profile ──
 
-// GET /api/profile — return current user's tradie profile
 router.get('/profile', requireAuth, async (req, res) => {
   try {
     const profile = await getProfile(req.user.id);
@@ -30,13 +43,28 @@ router.get('/profile', requireAuth, async (req, res) => {
   }
 });
 
-// PUT /api/profile — update current user's tradie profile
 router.put('/profile', requireAuth, async (req, res) => {
   try {
-    const { businessName, trade, labourRate, calloutFee, paymentTerms, logoBase64 } = req.body;
-    if (!businessName || !trade || !labourRate) {
-      return res.status(400).json({ error: 'Missing required fields: businessName, trade, labourRate' });
+    const businessName = sanitizeString(req.body.businessName, 200);
+    const trade = sanitizeString(req.body.trade, 100);
+    const labourRate = Number(req.body.labourRate);
+    const calloutFee = Number(req.body.calloutFee) || 0;
+    const paymentTerms = sanitizeString(req.body.paymentTerms, 100);
+    const logoBase64 = req.body.logoBase64 || null;
+
+    if (!businessName || !trade || !labourRate || labourRate <= 0) {
+      return res.status(400).json({ error: 'Missing or invalid required fields: businessName, trade, labourRate' });
     }
+    if (labourRate > 10000) {
+      return res.status(400).json({ error: 'Labour rate seems too high. Please check the value.' });
+    }
+    if (calloutFee > 10000) {
+      return res.status(400).json({ error: 'Callout fee seems too high. Please check the value.' });
+    }
+    if (logoBase64 && logoBase64.length > MAX_LOGO_SIZE) {
+      return res.status(400).json({ error: 'Logo image is too large. Please use a smaller image.' });
+    }
+
     await updateProfile(req.user.id, { businessName, trade, labourRate, calloutFee, paymentTerms, logoBase64 });
     res.json({ success: true });
   } catch (err) {
@@ -60,16 +88,18 @@ router.post('/transcribe', requireAuth, upload.single('audio'), async (req, res)
   }
 });
 
-// ── Quote Generation (no email) ──
+// ── Quote Generation ──
 
 router.post('/generate-quote', requireAuth, async (req, res) => {
   try {
-    const { transcript, tradieProfile } = req.body;
-    if (!transcript) {
-      return res.status(400).json({ error: 'Missing transcript' });
+    const transcript = sanitizeString(req.body.transcript, MAX_TRANSCRIPT_LENGTH);
+    const tradieProfile = req.body.tradieProfile || null;
+
+    if (!transcript || transcript.length < 10) {
+      return res.status(400).json({ error: 'Transcript is too short. Please describe the job in more detail.' });
     }
 
-    const quoteData = await generateQuote(transcript, tradieProfile || null);
+    const quoteData = await generateQuote(transcript, tradieProfile);
 
     const datePart = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     const randPart = Math.floor(1000 + Math.random() * 9000);
@@ -86,10 +116,18 @@ router.post('/generate-quote', requireAuth, async (req, res) => {
 
 router.post('/send-quote', requireAuth, async (req, res) => {
   try {
-    const { quoteData, clientName, clientEmail, quoteId, tradieProfile } = req.body;
+    const { quoteData, quoteId, tradieProfile } = req.body;
+    const clientName = sanitizeString(req.body.clientName, 200);
+    const clientEmail = sanitizeString(req.body.clientEmail, 200).toLowerCase();
 
     if (!quoteData || !clientName || !clientEmail || !quoteId) {
       return res.status(400).json({ error: 'Missing quoteData, clientName, clientEmail, or quoteId' });
+    }
+    if (!validateEmail(clientEmail)) {
+      return res.status(400).json({ error: 'Invalid client email address' });
+    }
+    if (!Array.isArray(quoteData.items) || quoteData.items.length === 0) {
+      return res.status(400).json({ error: 'Quote must have at least one line item' });
     }
 
     const quoteDate = new Date().toLocaleDateString('en-AU', {

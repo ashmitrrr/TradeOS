@@ -1,11 +1,6 @@
-// Changed: Added getProfile, updateProfile functions. saveQuote now includes user_id.
-//          getQuotes now queries by user_id instead of business_name.
-import { createClient } from '@supabase/supabase-js';
-
-const supabase =
-  process.env.SUPABASE_URL && process.env.SUPABASE_KEY
-    ? createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
-    : null;
+// Changed: Uses shared supabase client. Added getProfile, updateProfile.
+//          saveQuote includes user_id. getQuotes queries by user_id.
+import supabase from '../lib/supabaseClient.js';
 
 // ── Profile ──
 
@@ -78,7 +73,8 @@ export async function getQuotes(userId) {
       .from('quotes')
       .select('*')
       .eq('user_id', userId)
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .limit(100); // Cap history to prevent large response payloads
     if (error) throw error;
     return data || [];
   } catch (err) {

@@ -30,9 +30,20 @@ function fmt(n) {
   return Number(n).toFixed(2);
 }
 
+// HTML-escape user input to prevent XSS
+function esc(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate, tradieProfile }) {
-  const businessName = tradieProfile?.businessName || process.env.BUSINESS_NAME || 'TradeOS';
-  const paymentTerms = tradieProfile?.paymentTerms || '14 days';
+  const businessName = esc(tradieProfile?.businessName || process.env.BUSINESS_NAME || 'TradeOS');
+  const paymentTerms = esc(tradieProfile?.paymentTerms || '14 days');
   const logoBase64 = tradieProfile?.logoBase64 || null;
 
   const expiry = new Date();
@@ -45,8 +56,8 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
     .map(
       (item) => `
       <tr>
-        <td class="desc">${item.description}</td>
-        <td class="num">${item.quantity} ${item.unit}</td>
+        <td class="desc">${esc(item.description)}</td>
+        <td class="num">${esc(item.quantity)} ${esc(item.unit)}</td>
         <td class="num">$${fmt(item.unitPrice)}</td>
         <td class="num bold">$${fmt(item.subtotal)}</td>
       </tr>`
@@ -179,8 +190,8 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
   <div class="meta">
     <div class="meta-block">
       <h3>Prepared For</h3>
-      <div class="main">${clientName}</div>
-      <div class="sub">${clientEmail}</div>
+      <div class="main">${esc(clientName)}</div>
+      <div class="sub">${esc(clientEmail)}</div>
     </div>
     <div class="meta-block">
       <h3>From</h3>
@@ -199,12 +210,12 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
     ${quoteData.jobAddress ? `
     <div class="meta-block">
       <h3>Job Location</h3>
-      <div class="main">${quoteData.jobAddress}</div>
+      <div class="main">${esc(quoteData.jobAddress)}</div>
     </div>` : ''}
   </div>
 
   <div class="summary-box">
-    <strong>Scope of work:</strong> ${quoteData.jobSummary}
+    <strong>Scope of work:</strong> ${esc(quoteData.jobSummary)}
   </div>
 
   <table>
@@ -239,7 +250,7 @@ function buildQuoteHTML({ quoteData, clientName, clientEmail, quoteId, quoteDate
   ${quoteData.notes ? `
   <div class="notes">
     <h3>Notes &amp; Conditions</h3>
-    <p>${quoteData.notes}</p>
+    <p>${esc(quoteData.notes)}</p>
   </div>` : ''}
 
   <div class="footer">
