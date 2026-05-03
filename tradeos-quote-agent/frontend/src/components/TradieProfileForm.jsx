@@ -1,39 +1,28 @@
-// Changed: New file — Tradie profile setup form (Part A of Step 1)
-// Shown only on first use, stores profile in localStorage
+// Changed: Saves profile to Supabase (via backend API) instead of localStorage.
+//          Accepts session prop for auth token, loads existing profile for editing.
 import { useState, useRef } from 'react';
 
 const TRADE_OPTIONS = [
-  'Plumber',
-  'Electrician',
-  'Landscaper',
-  'Builder',
-  'Painter',
-  'Carpenter',
-  'Tiler',
-  'Concreter',
-  'Cleaner',
-  'Pest Control',
-  'HVAC / Air Conditioning',
-  'Pool Maintenance',
-  'Other',
+  'Plumber', 'Electrician', 'Landscaper', 'Builder', 'Painter',
+  'Carpenter', 'Tiler', 'Concreter', 'Cleaner', 'Pest Control',
+  'HVAC / Air Conditioning', 'Pool Maintenance', 'Other',
 ];
 
 const PAYMENT_OPTIONS = [
-  '7 days',
-  '14 days',
-  '30 days',
-  'On completion',
+  '7 days', '14 days', '30 days', 'On completion',
   '50% upfront + 50% on completion',
 ];
 
-export default function TradieProfileForm({ onSave }) {
-  const [businessName, setBusinessName] = useState('');
-  const [trade, setTrade] = useState('');
-  const [labourRate, setLabourRate] = useState('');
-  const [calloutFee, setCalloutFee] = useState('');
-  const [paymentTerms, setPaymentTerms] = useState('14 days');
-  const [logoPreview, setLogoPreview] = useState(null);
-  const [logoBase64, setLogoBase64] = useState(null);
+export default function TradieProfileForm({ onSave, session, apiBase, existingProfile }) {
+  const [businessName, setBusinessName] = useState(existingProfile?.businessName || '');
+  const [trade, setTrade] = useState(existingProfile?.trade || '');
+  const [labourRate, setLabourRate] = useState(existingProfile?.labourRate || '');
+  const [calloutFee, setCalloutFee] = useState(existingProfile?.calloutFee || '');
+  const [paymentTerms, setPaymentTerms] = useState(existingProfile?.paymentTerms || '14 days');
+  const [logoPreview, setLogoPreview] = useState(existingProfile?.logoBase64 || null);
+  const [logoBase64, setLogoBase64] = useState(existingProfile?.logoBase64 || null);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
 
   const isValid = businessName.trim().length > 0 && trade && labourRate;
@@ -41,7 +30,6 @@ export default function TradieProfileForm({ onSave }) {
   const handleLogoChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = (ev) => {
       setLogoBase64(ev.target.result);
@@ -50,7 +38,7 @@ export default function TradieProfileForm({ onSave }) {
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValid) return;
 
@@ -63,19 +51,43 @@ export default function TradieProfileForm({ onSave }) {
       logoBase64: logoBase64 || null,
     };
 
-    localStorage.setItem('tradieProfile', JSON.stringify(profile));
-    onSave(profile);
+    setSaving(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${apiBase}/api/profile`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session?.access_token}`,
+        },
+        body: JSON.stringify(profile),
+      });
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || 'Failed to save profile');
+      }
+
+      onSave(profile);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
     <div>
       <h1>
         <span className="heading-icon">🔧</span>
-        Set Up Your Profile
+        {existingProfile ? 'Edit Profile' : 'Set Up Your Profile'}
       </h1>
       <p className="subheading">
         Tell us about your business so every quote has your rates, branding, and payment terms baked in.
       </p>
+
+      {error && <div className="error-box">{error}</div>}
 
       <div className="card">
         <form onSubmit={handleSubmit}>
@@ -180,16 +192,16 @@ export default function TradieProfileForm({ onSave }) {
 
           <button
             type="submit"
-            className={`btn ${isValid ? 'btn-primary' : 'btn-disabled'}`}
-            disabled={!isValid}
+            className={`btn ${isValid && !saving ? 'btn-primary' : 'btn-disabled'}`}
+            disabled={!isValid || saving}
           >
-            {isValid ? 'Save Profile →' : 'Fill in required fields above'}
+            {saving ? 'Saving…' : isValid ? 'Save Profile →' : 'Fill in required fields above'}
           </button>
         </form>
       </div>
 
       <p className="form-footnote">
-        You only need to do this once. Change anytime in settings.
+        {existingProfile ? 'Your profile is saved to your account.' : 'You only need to do this once. Change anytime in settings.'}
       </p>
     </div>
   );

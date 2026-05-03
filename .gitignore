@@ -4,6 +4,7 @@ md files/
 
 # API keys
 **/.env
+**/.env.local
 .env
 
 # Dependencies
