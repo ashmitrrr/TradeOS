@@ -1,9 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BlueCrewAI — AI Built for Tradies</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>BlueCrewAI | Voice AI Quote & Invoice Generator for Australian Tradies</title>
+<meta name="description" content="Stop doing invoices at 9pm. BlueCrewAI lets Australian tradies generate professional, SWMS-compliant quotes and invoices in 2 minutes just by speaking into their phone. Try the beta.">
+<meta name="keywords" content="tradie software australia, voice ai invoice app, swms generator safe work nsw, construction quoting tool, xero integration tradies, plumber sparky admin app">
+<meta name="author" content="BlueCrewAI">
+<link rel="canonical" href="https://bluecrewai.com">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bluecrewai.com">
+<meta property="og:title" content="BlueCrewAI | Voice AI Quote & Invoice Generator for Tradies">
+<meta property="og:description" content="Built for tradies, not desk workers. Speak into your phone on-site to generate itemised PDF quotes and invoices before you leave the driveway.">
+<meta property="og:image" content="https://bluecrewai.com/og-image.png">
+<meta property="og:locale" content="en_AU">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://bluecrewai.com">
+<meta name="twitter:title" content="BlueCrewAI | Voice AI Quote & Invoice Generator for Tradies">
+<meta name="twitter:description" content="Eliminate typing. Speak to your phone to create professional quotes & invoices instantly on the job site.">
+<meta name="twitter:image" content="https://bluecrewai.com/og-image.png">
+
+<meta name="theme-color" content="#1B6AE4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -239,7 +264,7 @@ h2{font-size:clamp(32px,3.8vw,52px);font-weight:800;letter-spacing:-.03em;line-h
 .form-sub{font-size:14px;font-weight:500;color:var(--muted);margin-bottom:32px;line-height:1.5}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .form-group{margin-bottom:20px}
-.form-group label{font-size:13px;font-weight:800;color:var(--black);margin-bottom:8px;display:block;letter-spacing:.02em; font-family:var(--h)}
+.form-group label { font-size:13px;font-weight:800;color:var(--black);margin-bottom:8px;display:block;letter-spacing:.02em; font-family:var(--h)}
 .form-group label .req{color:var(--blue);margin-left:2px}
 .form-group input,.form-group select,.form-group textarea{width:100%;font-family:var(--f);font-size:15px;font-weight:500;padding:14px 16px;border:2px solid var(--border);border-radius:4px;background:white;color:var(--black);outline:none;transition:all .2s}
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue); box-shadow:4px 4px 0 rgba(29,78,216,.2);}
@@ -293,11 +318,78 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
   .form-row{grid-template-columns:1fr}
 }
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://bluecrewai.com/#software",
+      "url": "https://bluecrewai.com",
+      "name": "BlueCrewAI",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "iOS, Android, Windows, macOS",
+      "description": "Voice-first AI administration platform built for Australian trade businesses to generate itemised PDF quotes, professional invoices, and SafeWork compliant SWMS documents via mobile voice transcription.",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "AUD",
+        "lowPrice": "59",
+        "highPrice": "299",
+        "offerCount": "3",
+        "priceSpecification": [
+          {
+            "@type": "PriceSpecification",
+            "name": "Quote Generator Agent",
+            "price": "79",
+            "priceCurrency": "AUD",
+            "unitText": "MONTH"
+          },
+          {
+            "@type": "PriceSpecification",
+            "name": "Tradie Admin Agent",
+            "price": "69",
+            "priceCurrency": "AUD",
+            "unitText": "MONTH"
+          },
+          {
+            "@type": "PriceSpecification",
+            "name": "Site Safety & SWMS Agent",
+            "price": "199",
+            "priceCurrency": "AUD",
+            "unitText": "MONTH"
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://bluecrewai.com/#organization",
+      "name": "BlueCrewAI",
+      "url": "https://bluecrewai.com",
+      "logo": "https://bluecrewai.com/logo.png",
+      "foundingDate": "2026-04",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sydney",
+        "addressRegion": "NSW",
+        "addressCountry": "AU"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "ashmit@bluecrewai.com",
+        "availableLanguage": "en"
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
 <nav id="nav">
-  <a href="#" class="logo"><img src="./logo.png" alt="BlueCrewAI" onerror="this.style.display='none'"></a>
+  <a href="#" class="logo"><img src="./logo.png" alt="BlueCrewAI logo - electric blue and white branding" width="180" height="52" onerror="this.style.display='none'"></a>
   <div class="nav-links">
     <a href="#agents">Agents</a>
     <a href="#custom">Custom Agents</a>
@@ -310,7 +402,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
 
 <section class="hero" id="home">
   <div class="hero-left">
-    <h1>AI built for<br>people who<br><em>work hard.</em></h1>
+    <h1>Voice AI Admin App Built for<br>Australian Tradies<br><em>work hard.</em></h1>
     <p class="hero-sub">BlueCrewAI gives Australian tradies an AI that handles invoices, safety docs, and quotes — so you spend more time on the tools, less time on the paperwork.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-blue">Get in touch →</a>
@@ -325,9 +417,9 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
   <div class="hero-right">
     <div class="hero-img-wrap">
       <div class="hero-carousel-track">
-        <img src="./tradie_electrician_1777796091372.png" alt="Electrician using app" class="hc-img active">
-        <img src="./tradie_plumber_1777796119802.png" alt="Plumber checking tablet" class="hc-img">
-        <img src="./tradie_foreman_1777796136782.png" alt="Foreman with blueprint" class="hc-img">
+        <img src="./tradie_electrician_1777796091372.png" alt="Australian electrician using BlueCrewAI voice memo system on site" width="414" height="440" fetchpriority="high" class="hc-img active">
+        <img src="./tradie_plumber_1777796119802.png" alt="Sydney plumber review automated invoice metrics on a phone dashboard" width="414" height="440" class="hc-img">
+        <img src="./tradie_foreman_1777796136782.png" alt="Construction foreman generating SafeWork SWMS compliance documentation via voice transcription" width="414" height="440" class="hc-img">
       </div>
       <div class="hc-nav">
         <div class="hc-dot active" onmouseenter="setSlide(0)"></div>
@@ -362,7 +454,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
 
 <section class="problem rv" id="problem">
   <span class="tag">The problem</span>
-  <h2>You didn't start a trade<br>to do paperwork at 9pm.</h2>
+  <h2>Stop Doing Invoices at 9 PM and Chasing Unpaid Jobs</h2>
   <div class="prob-grid">
     <div class="prob-cards">
       <div class="prob-card rv d1"><span class="prob-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span><div><h4>Manual invoicing kills your evenings</h4><p>45+ minutes every night writing up invoices, chasing payments, logging jobs into Xero — after a full day on the tools.</p></div></div>
@@ -370,7 +462,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
       <div class="prob-card rv d3"><span class="prob-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></span><div><h4>Slow quotes = losing jobs to competitors</h4><p>You go home, spend an hour building a quote. By the time you send it, the client has already hired someone else.</p></div></div>
     </div>
     <div class="prob-visual rv d2">
-      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=82" alt="Builder on construction site">
+      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=82" alt="Australian builder sitting on site drowning in manual compliance paperwork" width="414" height="460" loading="lazy" decoding="async">
       <div class="prob-overlay"></div>
       <div class="prob-caption"><strong>6 hrs</strong><span>lost to paperwork every week</span></div>
     </div>
@@ -379,7 +471,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
 
 <section class="agents" id="agents">
   <div class="sec-head rv">
-    <div><span class="tag">The solution</span><h2>Three AI agents.<br>One platform.</h2></div>
+    <div><span class="tag">The solution</span><h2>3 Specialized AI Agents Built for Your Trade Business</h2></div>
     <p class="sub">Each agent handles one major pain point. Click any agent to get started — we'll reach out personally.</p>
   </div>
   <div class="agents-grid">
@@ -387,7 +479,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
       <div class="ac-badge">Most popular</div>
       <span class="ac-label">Agent 01</span>
       <span class="ac-emoji"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
-      <h3 class="ac-name">Admin Agent</h3>
+      <h3 class="ac-name">Smart Tradie Invoice &amp; Xero Automated Bookkeeping Agent</h3>
       <p class="ac-tag">Talk into your phone for 30 seconds. Invoice sent, job logged, payment scheduled.</p>
       <div class="ac-price">$69<sub>/month</sub></div>
       <ul class="ac-feats"><li>Voice-to-invoice in 30 seconds</li><li>Auto emails the client</li><li>Xero &amp; MYOB sync</li><li>Payment follow-up SMS</li></ul>
@@ -396,7 +488,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
     <div class="acard ac-cream rv d2">
       <span class="ac-label">Agent 02</span>
       <span class="ac-emoji"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>
-      <h3 class="ac-name">Safety Agent</h3>
+      <h3 class="ac-name">SafeWork Compliant SWMS &amp; Site Safety Document Generator</h3>
       <p class="ac-tag">Generate a compliant SWMS in 2 minutes. Never risk a $10K fine over paperwork again.</p>
       <div class="ac-price">$199<sub>/month</sub></div>
       <ul class="ac-feats"><li>SafeWork NSW/VIC compliant SWMS</li><li>Photo → hazard report instantly</li><li>Toolbox talk logs</li><li>Site manager dashboard</li></ul>
@@ -405,10 +497,10 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
     <div class="acard ac-blue rv d3">
       <span class="ac-label">Agent 03</span>
       <span class="ac-emoji"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></span>
-      <h3 class="ac-name">Quote Agent</h3>
+      <h3 class="ac-name">Instant Site Quote Generator with 10% GST Calculation</h3>
       <p class="ac-tag">Send the quote before you leave the driveway. Win more jobs, faster.</p>
       <div class="ac-price">$79<sub>/month</sub></div>
-      <ul class="ac-feats"><li>Voice-to-quote while on site</li><li>Branded PDF sent instantly</li><li>Stripe payment link in quote</li><li>Current material pricing built-in</li></ul>
+      <ul class="ac-feats"><li>Voice-to-quote while on site</li><li>Branded PDF sent instantly</li><li>Stripe payment link in quote</li><li>Local Bunnings &amp; Reece Materials Pricing Integration</li></ul>
       <button class="ac-cta-btn" onclick="selectAgent('quote')">Get started →</button>
     </div>
   </div>
@@ -455,26 +547,26 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
     <p class="sub">No typing, no logins, no desktop. Speak into your phone and BlueCrewAI handles everything else.</p>
   </div>
   <div class="how-imgs">
-    <div class="how-img-card rv d1"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=82" alt="Plumber working"><div class="how-img-card-lbl"><h4>Finish the job</h4><p>You do what you do best. Work with your hands.</p></div></div>
-    <div class="how-img-card rv d2"><img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=900&q=82" alt="Tradie on phone"><div class="how-img-card-lbl"><h4>Speak it, done</h4><p>30-second voice memo. Everything sorted before you drive away.</p></div></div>
+    <div class="how-img-card rv d1"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=82" alt="Professional Australian plumber working on-site with his hands" width="446" height="320" loading="lazy" decoding="async"><div class="how-img-card-lbl"><h4>Finish the job</h4><p>You do what you do best. Work with your hands.</p></div></div>
+    <div class="how-img-card rv d2"><img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=900&q=82" alt="Tradie speaking a mobile voice memo memo to generate an instant itemised trade quote" width="446" height="320" loading="lazy" decoding="async"><div class="how-img-card-lbl"><h4>Speak it, done</h4><p>30-second voice memo. Everything sorted before you drive away.</p></div></div>
   </div>
   <div class="how-steps">
     <div class="how-step rv d1"><div class="how-step-n">01</div><div class="how-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></div><h4>Speak it</h4><p>After finishing a job, speak a quick voice memo. No typing, no forms.</p></div>
     <div class="how-step rv d2"><div class="how-step-n">02</div><div class="how-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div><h4>AI processes</h4><p>BlueCrewAI extracts job details, materials, and labour automatically.</p></div>
     <div class="how-step rv d3"><div class="how-step-n">03</div><div class="how-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div><h4>Doc generated</h4><p>Invoice, SWMS, or quote generated instantly. Professional and compliant.</p></div>
-    <div class="how-step rv d3"><div class="how-step-n">04</div><div class="how-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></div><h4>Sent &amp; logged</h4><p>Sent to client automatically. Logged to Xero. Follow-up scheduled.</p></div>
+    <div class="how-step rv d3"><div class="how-step-n">04</div><div class="how-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></div><h4>Sent &amp; logged</h4><p>Sent to client automatically. Logged to Xero. Automatic 7-Day SMS Client Follow-ups via Twilio.</p></div>
   </div>
 </section>
 
 <section class="proof rv" id="proof">
   <div class="sec-head">
-    <div><span class="tag">Real tradies</span><h2>Tradies who got their<br>evenings back.</h2></div>
+    <div><span class="tag">Real tradies</span><h2>Built for Aussie Landscapers, Sparkies, Plumbers, and Builders</h2></div>
     <p class="sub">Beta feedback from real tradies who tested BlueCrewAI before launch.</p>
   </div>
   <div class="proof-imgs">
-    <div class="proof-img rv d1"><img src="https://images.unsplash.com/photo-1590579491624-f98f36d4c763?w=800&q=82" alt="Electrician at work"></div>
-    <div class="proof-img rv d2"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=82" alt="Builder on site"></div>
-    <div class="proof-img rv d3"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=82" alt="Worker outdoors"></div>
+    <div class="proof-img rv d1"><img src="https://images.unsplash.com/photo-1590579491624-f98f36d4c763?w=800&q=82" alt="Penrith NSW trade subcontractor electrician smiling on the job" width="289" height="260" loading="lazy" decoding="async"></div>
+    <div class="proof-img rv d2"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=82" alt="Melbourne Victoria site foreman reviewing hazard paperwork on a tablet" width="289" height="260" loading="lazy" decoding="async"></div>
+    <div class="proof-img rv d3"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=82" alt="Brisbane Queensland local residential landscape designer checking site layout outdoors" width="289" height="260" loading="lazy" decoding="async"></div>
   </div>
   <div class="tcards">
     <div class="tcard rv d1"><div class="tcard-stars">★★★★★</div><p class="tcard-q">"I used to spend an hour after work doing invoices. Now I talk into my phone on the way to the car and <strong>it's all done before I get home.</strong>"</p><div class="tcard-author"><div class="tcard-av av1">D</div><div class="tcard-info"><h5>Dave M.</h5><p>Plumber · Penrith, NSW</p></div></div></div>
@@ -559,7 +651,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <a href="#" class="logo"><img src="./logo.png" alt="BlueCrewAI" style="height:48px;border-radius:10px" onerror="this.style.display='none'"></a>
+      <a href="#" class="logo"><img src="./logo.png" alt="BlueCrewAI brand identity logo" width="166" height="48" style="height:48px;border-radius:10px" onerror="this.style.display='none'"></a>
       <p style="margin-top:12px">AI built for people who work with their hands, not their keyboards. Made in Sydney</p>
     </div>
     <div class="footer-cols">
