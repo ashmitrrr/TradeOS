@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /$
+Allow: /index.html
+Allow: /sitemap.xml
+Disallow: /tradeos-quote-agent/
+
+# Host
+Host: https://bluecrewai.com
+Sitemap: https://bluecrewai.com/sitemap.xml
