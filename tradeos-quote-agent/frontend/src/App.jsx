@@ -13,6 +13,7 @@ import QuoteResult from './components/QuoteResult.jsx';
 import QuoteHistory from './components/QuoteHistory.jsx';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
+const VITE_API_KEY = import.meta.env.VITE_API_KEY || '';
 
 const STEP_LABELS = {
   profile: 'Setup',
@@ -60,10 +61,13 @@ export default function App() {
   const clientNameRef = useRef('');
   const clientEmailRef = useRef('');
 
-  // Helper: get auth headers for API calls
+  // Helper: get auth + API key headers for all API calls
   const getAuthHeaders = () => {
     const token = session?.access_token;
-    return token ? { Authorization: `Bearer ${token}` } : {};
+    return {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      'x-api-key': VITE_API_KEY,
+    };
   };
 
   // Wrapper: auto-logout on 401 (expired session)

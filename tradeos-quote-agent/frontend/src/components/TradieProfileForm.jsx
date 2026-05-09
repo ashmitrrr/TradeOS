@@ -1,6 +1,6 @@
-// Changed: Saves profile to Supabase (via backend API) instead of localStorage.
-//          Accepts session prop for auth token, loads existing profile for editing.
 import { useState, useRef } from 'react';
+
+const VITE_API_KEY = import.meta.env.VITE_API_KEY || '';
 
 const TRADE_OPTIONS = [
   'Plumber', 'Electrician', 'Landscaper', 'Builder', 'Painter',
@@ -60,6 +60,7 @@ export default function TradieProfileForm({ onSave, session, apiBase, existingPr
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${session?.access_token}`,
+          'x-api-key': VITE_API_KEY,
         },
         body: JSON.stringify(profile),
       });

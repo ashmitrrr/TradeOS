@@ -1,5 +1,6 @@
-// Changed: Uses auth token to fetch quotes (per-user) instead of businessName query param
 import { useState, useEffect } from 'react';
+
+const VITE_API_KEY = import.meta.env.VITE_API_KEY || '';
 
 function fmt(n) {
   return Number(n).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -17,7 +18,10 @@ export default function QuoteHistory({ session, apiBase, onBack }) {
 
   useEffect(() => {
     fetch(`${apiBase}/api/quotes`, {
-      headers: { Authorization: `Bearer ${session?.access_token}` },
+      headers: {
+        Authorization: `Bearer ${session?.access_token}`,
+        'x-api-key': VITE_API_KEY,
+      },
     })
       .then((r) => r.json())
       .then((data) => setQuotes(data.quotes || []))

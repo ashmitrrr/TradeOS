@@ -55,12 +55,25 @@ app.use('/api/generate-quote', aiLimiter);
 app.use('/api/transcribe', aiLimiter);
 app.use('/api/send-quote', aiLimiter);
 
-// ── Health check (unprotected) ──
+// ── API key auth ──
+const API_KEY = process.env.INTERNAL_API_KEY;
+if (!API_KEY) console.warn('⚠️  INTERNAL_API_KEY is not set — API is unprotected!');
+
+function requireApiKey(req, res, next) {
+  const key = req.headers['x-api-key'];
+  if (!key || key !== API_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+}
+
+// ── Health check (unprotected — Railway uses this for uptime checks) ──
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// ── All routes ──
+// ── All routes (protected) ──
+app.use('/api', requireApiKey);
 app.use('/api', quoteRoutes);
 
 app.listen(PORT, () => {
