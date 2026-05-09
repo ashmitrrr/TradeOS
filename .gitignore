@@ -13,3 +13,4 @@ md files/
 # System
 .DS_Store
 dist/
+design_handoff_dashboard/
