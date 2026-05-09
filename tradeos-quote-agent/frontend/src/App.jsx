@@ -94,42 +94,67 @@ export default function App() {
     return () => { clearTimeout(fadeTimer); clearTimeout(hideTimer); };
   }, []);
 
-  // ── Auth: listen for session changes ──
+  // ── Auth: onAuthStateChange is the single source of truth for session ──
   useEffect(() => {
-    // If Supabase not configured, skip auth (dev mode)
     if (!isSupabaseConfigured || !supabase) {
       setAuthLoading(false);
       setSession({ access_token: 'dev-token', user: { id: 'dev', email: 'dev@localhost' } });
       return;
     }
 
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session: s } }) => {
+    let mounted = true;
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
+      if (!mounted) return;
       setSession(s);
       setAuthLoading(false);
     });
 
-    // Listen for auth state changes (login, logout, token refresh)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
-      setSession(s);
+    // Fast path: unblock the loading state quickly for unauthenticated visitors
+    // without waiting for the INITIAL_SESSION event to fire.
+    supabase.auth.getSession().then(({ data: { session: s } }) => {
+      if (!mounted) return;
+      if (!s) {
+        setSession(null);
+        setAuthLoading(false);
+      }
+      // If session exists, onAuthStateChange fires and handles it above.
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
-  // ── Load profile from API when session becomes available ──
+  // ── Load profile when session becomes available ──
+  // Uses a plain fetch (not authFetch) so that a backend error (including a
+  // missing API key returning 401) does NOT sign the user out — it just shows
+  // the profile setup screen. authFetch's auto-signout is reserved for
+  // mid-session operations (transcribe, generate, send).
   useEffect(() => {
     if (!session) {
       setTradieProfile(null);
       return;
     }
 
+    let mounted = true;
     setProfileLoading(true);
-    authFetch(`${API_BASE}/api/profile`)
-      .then((r) => r.json())
+
+    const token = session.access_token;
+    const headers = {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      'x-api-key': VITE_API_KEY,
+    };
+
+    fetch(`${API_BASE}/api/profile`, { headers })
+      .then((r) => {
+        if (!r.ok) throw new Error(`Profile fetch returned ${r.status}`);
+        return r.json();
+      })
       .then((data) => {
+        if (!mounted) return;
         if (data.profile && data.profile.business_name) {
-          // Convert DB column names to camelCase for frontend
           setTradieProfile({
             businessName: data.profile.business_name,
             trade: data.profile.trade,
@@ -140,12 +165,20 @@ export default function App() {
           });
           setScreen('form');
         } else {
-          // Profile exists but not filled out — show setup
           setScreen('profile');
         }
       })
-      .catch(() => setScreen('profile'))
-      .finally(() => setProfileLoading(false));
+      .catch((err) => {
+        if (!mounted) return;
+        // Fetch failed — show profile setup. Session remains intact.
+        console.error('Profile fetch failed:', err);
+        setScreen('profile');
+      })
+      .finally(() => {
+        if (mounted) setProfileLoading(false);
+      });
+
+    return () => { mounted = false; };
   }, [session?.access_token]);
 
   const handleSignOut = async () => {

@@ -52,7 +52,14 @@ export default function AuthScreen({ onAuth }) {
     }
   };
 
-  const isValid = email.includes('@') && (mode === 'forgot' || password.length >= 6);
+  // For login: enable as soon as both fields have content — let the server validate.
+  // For signup: keep the 6-char floor as a UX hint.
+  const isValid =
+    mode === 'forgot'
+      ? email.includes('@')
+      : mode === 'signup'
+      ? email.includes('@') && password.length >= 6
+      : email.includes('@') && password.length > 0;
 
   return (
     <div className="auth-screen">
