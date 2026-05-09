@@ -7,17 +7,25 @@ import quoteRoutes from './routes/quote.js';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// ── CORS — allow frontend origin(s) ──
-const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173')
-  .split(',')
-  .map((u) => u.trim());
+// ── CORS — explicit origin allowlist ──
+const allowedOrigins = [
+  'https://bluecrewai.com',
+  'https://www.bluecrewai.com',
+  'https://app.bluecrewai.com',
+  'https://quote.bluecrewai.com',
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
 
 app.use(cors({
-  origin: (origin, cb) => {
-    // Allow requests with no origin (mobile apps, curl, etc)
-    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
-    cb(new Error('CORS not allowed'));
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
   },
+  credentials: true
 }));
 
 // ── Body parsing with size limit — prevents huge payload attacks ──
