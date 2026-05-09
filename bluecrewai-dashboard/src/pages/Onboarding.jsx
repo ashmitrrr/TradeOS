@@ -45,7 +45,7 @@ export default function Onboarding() {
     setSaving(true)
 
     try {
-      const { error: dbErr } = await supabase.from('profiles').insert({
+      const { error: dbErr } = await supabase.from('profiles').upsert({
         id: session.user.id,
         email: session.user.email,
         business_name: form.business_name,
@@ -53,9 +53,8 @@ export default function Onboarding() {
         labour_rate: parseFloat(form.labour_rate) || 0,
         callout_fee: parseFloat(form.callout_fee) || 0,
         payment_terms: form.payment_terms,
-        created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-      })
+      }, { onConflict: 'id' })
 
       if (dbErr) throw dbErr
 

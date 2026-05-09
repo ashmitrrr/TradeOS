@@ -13,7 +13,6 @@ export function AuthProvider({ children }) {
       if (session) {
         fetchProfile(session.user.id)
       } else {
-        setSession(null)
         setProfile(null)
       }
     })

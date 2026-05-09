@@ -16,6 +16,7 @@ export default function Signup() {
   const [error, setError]         = useState('')
   const [loading, setLoading]     = useState(false)
 
+  if (session === undefined) return null  // still resolving session from storage
   if (session) return <Navigate to="/dashboard" replace />
 
   async function handleSubmit(e) {
