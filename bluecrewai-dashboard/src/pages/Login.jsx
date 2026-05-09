@@ -17,7 +17,7 @@ function StatChip({ n, label }) {
 }
 
 export default function Login() {
-  const { session } = useAuth()
+  const { session, loading: authLoading } = useAuth()
   const navigate = useNavigate()
 
   const [email, setEmail]       = useState('')
@@ -26,7 +26,7 @@ export default function Login() {
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
 
-  if (session === undefined) return null  // still resolving session from storage
+  if (authLoading) return null  // still resolving session from storage
   if (session) return <Navigate to="/dashboard" replace />
 
   async function handleSubmit(e) {
