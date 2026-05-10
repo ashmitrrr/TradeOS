@@ -64,6 +64,7 @@ export default function Settings() {
   // Hydrate form when profile loads
   useEffect(() => {
     if (profile) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setForm({
         business_name: profile.business_name || '',
         trade: profile.trade || '',

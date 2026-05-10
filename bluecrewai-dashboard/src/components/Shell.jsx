@@ -80,21 +80,9 @@ export default function Shell({ active = 'home', title, subtitle, breadcrumb, to
       }}>
         {/* Logo */}
         <Link to="/dashboard" style={{
-          display: 'flex', alignItems: 'center', gap: 10,
-          padding: '4px 8px 24px', textDecoration: 'none',
+          display: 'block', padding: '4px 8px 24px', textDecoration: 'none',
         }}>
-          <div style={{
-            width: 32, height: 32, borderRadius: 9,
-            background: 'var(--bc-ink)', display: 'grid',
-            placeItems: 'center', color: 'white', fontWeight: 800,
-            fontSize: 14, letterSpacing: '-0.02em', flexShrink: 0,
-          }}>b</div>
-          <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
-            <span style={{ fontWeight: 700, fontSize: 15, letterSpacing: '-0.02em', color: 'var(--bc-ink)' }}>
-              bluecrew<span style={{ color: 'var(--bc-blue)' }}>ai</span>
-            </span>
-            <span style={{ fontSize: 11, color: 'var(--bc-ink-4)', marginTop: 1 }}>Workspace</span>
-          </div>
+          <img src="/logo.png" alt="BlueCrewAI logo" style={{ height: 40, width: 'auto', display: 'block' }} />
         </Link>
 
         <SidebarGroup label="Workspace" />

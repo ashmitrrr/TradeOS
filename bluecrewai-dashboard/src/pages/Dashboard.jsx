@@ -27,7 +27,7 @@ function StatTile({ icon, value, label, sub, accent = 'var(--bc-blue)' }) {
   )
 }
 
-function AgentCard({ number, name, tagline, accent, active, ctaLabel, ctaHref, ctaInternal, comingSoon }) {
+function AgentCard({ number, name, tagline, accent, active, ctaLabel, ctaHref, comingSoon }) {
   return (
     <div className="bc-card" style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 14, position: 'relative', overflow: 'hidden' }}>
       {/* Coloured top stripe */}

@@ -1,5 +1,5 @@
 import { Check, Download } from 'lucide-react'
-import { Link } from 'react-router-dom'
+
 import Shell from '../components/Shell'
 
 function PlanCard({ name, price, sub, features, cta, highlighted, current, onCta }) {
