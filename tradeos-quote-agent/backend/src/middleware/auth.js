@@ -16,6 +16,13 @@ export async function requireAuth(req, res, next) {
     return res.status(401).json({ error: 'Unauthorized — no token provided' });
   }
 
+  // Handle Trial Codes
+  const trialCodes = ['BluecrewAIBETA001', 'BluecrewAIBETA002', 'BluecrewAIBETA003'];
+  if (trialCodes.includes(token)) {
+    req.user = { id: 'trial-user', email: 'trial@bluecrewai.com' };
+    return next();
+  }
+
   try {
     const { data: { user }, error } = await supabase.auth.getUser(token);
 

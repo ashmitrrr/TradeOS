@@ -96,6 +96,16 @@ export default function App() {
 
   // ── Auth: onAuthStateChange is the single source of truth for session ──
   useEffect(() => {
+    const trialCode = localStorage.getItem('bluecrewai_trial_code');
+    if (trialCode) {
+      setSession({
+        access_token: trialCode,
+        user: { id: `trial-user`, email: `trial@bluecrewai.com` }
+      });
+      setAuthLoading(false);
+      return;
+    }
+
     if (!isSupabaseConfigured || !supabase) {
       setAuthLoading(false);
       setSession({ access_token: 'dev-token', user: { id: 'dev', email: 'dev@localhost' } });
@@ -182,6 +192,7 @@ export default function App() {
   }, [session?.access_token]);
 
   const handleSignOut = async () => {
+    localStorage.removeItem('bluecrewai_trial_code');
     if (supabase) await supabase.auth.signOut();
     setSession(null);
     setTradieProfile(null);
@@ -333,9 +344,17 @@ export default function App() {
     );
   }
 
+  const handleTrialLogin = (code) => {
+    localStorage.setItem('bluecrewai_trial_code', code);
+    setSession({
+      access_token: code,
+      user: { id: `trial-user`, email: `trial@bluecrewai.com` }
+    });
+  };
+
   // ── Not authenticated — show login ──
   if (!session) {
-    return <AuthScreen />;
+    return <AuthScreen onAuth={handleTrialLogin} />;
   }
 
   // ── Profile loading ──
