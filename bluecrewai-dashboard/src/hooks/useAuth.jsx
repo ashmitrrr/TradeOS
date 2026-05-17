@@ -21,25 +21,39 @@ export function AuthProvider({ children }) {
         return
       }
       setProfileLoading(true)
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .maybeSingle()
-      
-      if (!mounted) return
-      
-      if (error) console.error('Profile fetch failed:', error)
-      setProfile(data ?? null)
-      setProfileLoading(false)
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .maybeSingle()
+        
+        if (!mounted) return
+        
+        if (error) console.error('Profile fetch failed:', error)
+        setProfile(data ?? null)
+      } catch (err) {
+        console.error('fetchProfile error:', err)
+        if (mounted) setProfile(null)
+      } finally {
+        if (mounted) setProfileLoading(false)
+      }
     }
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (!mounted) return
-      setSession(session)
-      await fetchProfile(session?.user)
-      if (mounted) setLoading(false)
-    })
+    supabase.auth.getSession()
+      .then(async (response) => {
+        if (!mounted) return
+        const session = response?.data?.session || null
+        setSession(session)
+        await fetchProfile(session?.user)
+      })
+      .catch((err) => {
+        console.error('getSession error:', err)
+        if (mounted) setSession(null)
+      })
+      .finally(() => {
+        if (mounted) setLoading(false)
+      })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
