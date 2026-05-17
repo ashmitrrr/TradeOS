@@ -12,51 +12,45 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     let mounted = true
 
-    // onAuthStateChange is the single source of truth for session + profile.
-    // getSession() below is only used to unblock the loading state quickly when
-    // there is no session (e.g. fresh visitor) before the INITIAL_SESSION event fires.
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        if (!mounted) return
-
-        setSession(session)
-
-        if (session?.user) {
-          setProfileLoading(true)
-          const { data, error } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', session.user.id)
-            .maybeSingle()
-
-          if (!mounted) return
-
-          if (error) {
-            // Fetch error — keep profile as null but do NOT sign the user out.
-            console.error('Profile fetch failed:', error)
-          }
-          // data is null when no row exists (new user) — that's correct, send to onboarding.
-          setProfile(data ?? null)
-          setProfileLoading(false)
-        } else {
+    const fetchProfile = async (user) => {
+      if (!user) {
+        if (mounted) {
           setProfile(null)
           setProfileLoading(false)
         }
+        return
+      }
+      setProfileLoading(true)
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .maybeSingle()
+      
+      if (!mounted) return
+      
+      if (error) console.error('Profile fetch failed:', error)
+      setProfile(data ?? null)
+      setProfileLoading(false)
+    }
 
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!mounted) return
+      setSession(session)
+      await fetchProfile(session?.user)
+      if (mounted) setLoading(false)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (!mounted) return
+        if (event === 'INITIAL_SESSION') return // Handled by getSession above
+
+        setSession(session)
+        await fetchProfile(session?.user)
         if (mounted) setLoading(false)
       }
     )
-
-    // Resolve the no-session case quickly so the spinner doesn't linger for
-    // unauthenticated visitors waiting for the INITIAL_SESSION event.
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!mounted) return
-      if (!session) {
-        setSession(null)
-        setLoading(false)
-      }
-      // If there IS a session, onAuthStateChange handles everything above.
-    })
 
     return () => {
       mounted = false
