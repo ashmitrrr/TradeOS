@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>BlueCrewAI | Smart Agents for Australian Tradies</title>
-<meta name="description" content="Stop doing invoices at 9pm. BlueCrewAI lets Australian tradies generate professional, SWMS-compliant quotes and invoices in 2 minutes just by speaking into their phone. Try the beta.">
+<title>BlueCrewAI | AI Automation for Australian Trades & Construction Firms</title>
+<meta name="description" content="BlueCrewAI automates entire trade business operations — quoting, invoicing, SWMS, scheduling. Built for Australian tradies and construction firms. Sydney-based team.">
 <meta name="keywords" content="tradie software australia, voice ai invoice app, swms generator safe work nsw, construction quoting tool, xero integration tradies, plumber sparky admin app">
 <meta name="author" content="BlueCrewAI">
 <link rel="canonical" href="https://bluecrewai.com">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bluecrewai.com">
-<meta property="og:title" content="BlueCrewAI | Voice AI Quote & Invoice Generator for Tradies">
-<meta property="og:description" content="Built for tradies, not desk workers. Speak into your phone on-site to generate itemised PDF quotes and invoices before you leave the driveway.">
+<meta property="og:title" content="BlueCrewAI | AI Automation for Australian Trades & Construction Firms">
+<meta property="og:description" content="BlueCrewAI automates entire trade business operations — quoting, invoicing, SWMS, scheduling. Built for Australian tradies and construction firms. Sydney-based team.">
 <meta property="og:image" content="https://bluecrewai.com/og-image.png">
 <meta property="og:locale" content="en_AU">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://bluecrewai.com">
-<meta name="twitter:title" content="BlueCrewAI | Voice AI Quote & Invoice Generator for Tradies">
-<meta name="twitter:description" content="Eliminate typing. Speak to your phone to create professional quotes & invoices instantly on the job site.">
+<meta name="twitter:title" content="BlueCrewAI | AI Automation for Australian Trades & Construction Firms">
+<meta name="twitter:description" content="BlueCrewAI automates entire trade business operations — quoting, invoicing, SWMS, scheduling. Built for Australian tradies and construction firms. Sydney-based team.">
 <meta name="twitter:image" content="https://bluecrewai.com/og-image.png">
 
 <meta name="theme-color" content="#1B6AE4">
@@ -227,7 +227,7 @@ h2{font-size:clamp(32px,3.8vw,52px);font-weight:800;letter-spacing:-.03em;line-h
 .toggle{display:flex;background:var(--border);border-radius:4px;padding:4px;margin:24px auto 48px;width:fit-content}
 .toggle button{font-family:var(--h);font-size:14px;font-weight:800;padding:12px 24px;border-radius:2px;border:none;cursor:pointer;transition:all .18s;background:transparent;color:var(--muted)}
 .toggle button.on{background:var(--black);color:white}
-.pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pcards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
 .pcard{background:white; border-radius:4px;padding:40px;border:2px solid var(--border);transition:all .2s}
 .pcard:hover{transform:translate(-4px,-4px); box-shadow:8px 8px 0 var(--border); border-color:var(--black)}
 .pcard.featured{background:var(--dark);border-color:var(--dark);color:white}
@@ -304,6 +304,17 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
 .rv{opacity:0;transform:translateY(16px);transition:opacity .4s ease-out,transform .4s ease-out}
 .rv.in{opacity:1;transform:translateY(0)}
 .d1{transition-delay:.1s}.d2{transition-delay:.15s}.d3{transition-delay:.2s}
+.firms{background:var(--off);border-bottom:1px solid var(--border)}
+.firms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:36px}
+.firm-card{background:white;border-radius:4px;padding:36px;border:2px solid var(--border);transition:all .2s}
+.firm-card:hover{border-color:var(--dark);transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--dark)}
+.firm-card h3{font-size:22px;font-weight:800;margin-bottom:14px;letter-spacing:-.02em;font-family:var(--h)}
+.firm-card p{font-size:14px;font-weight:500;color:var(--muted);line-height:1.6;margin-bottom:20px}
+.firm-price{display:inline-block;font-size:13px;font-weight:800;color:var(--blue);background:var(--blue-pale);border:1px solid var(--blue-pale2);padding:6px 14px;border-radius:2px;letter-spacing:.03em;font-family:var(--h)}
+.firm-tags{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 32px}
+.firm-tag{font-size:13px;font-weight:700;padding:8px 18px;border:2px solid var(--border);border-radius:4px;color:var(--black);background:white;transition:all .18s}
+.firm-tag:hover{border-color:var(--blue);color:var(--blue)}
+.firms-cta{text-align:center}
 @media(max-width:960px){
   nav{padding:0 24px}
   .nav-links{display:none}
@@ -311,7 +322,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
   .hero::after{display:none}
   .hero-right{display:none}
   section{padding:72px 24px}
-  .prob-grid,.agents-grid,.how-imgs,.how-steps,.proof-imgs,.tcards,.pcards,.ca-grid,.contact-grid{grid-template-columns:1fr}
+  .prob-grid,.agents-grid,.firms-grid,.how-imgs,.how-steps,.proof-imgs,.tcards,.pcards,.ca-grid,.contact-grid{grid-template-columns:1fr}
   .sec-head{flex-direction:column;align-items:flex-start}
   .hero-stats{flex-wrap:wrap;gap:24px}
   .band{flex-direction:column;text-align:left; padding:48px 24px;}
@@ -396,6 +407,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
   <div class="nav-links">
     <a href="#agents">Agents</a>
     <a href="#custom">Custom Agents</a>
+    <a href="#firms">For Firms</a>
     <a href="#how">How it works</a>
     <a href="#pricing">Pricing</a>
     <a href="#contact" class="btn btn-dark">Contact us →</a>
@@ -405,16 +417,16 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
 
 <section class="hero" id="home">
   <div class="hero-left">
-    <h1>AI Admin App Built for<br>Australian Tradies.<br><em>Zero paperwork.</em></h1>
-    <p class="hero-sub">BlueCrewAI gives Australian tradies an AI that handles invoices, safety docs, and quotes — so you spend more time on the tools, less time on the paperwork.</p>
+    <h1>AI Automation for Australian<br>Trades &amp; Construction<br><em>Firms.</em></h1>
+    <p class="hero-sub">We automate your entire operations — quoting, invoicing, compliance, scheduling, reporting. Built for tradies and trade businesses who are done doing things manually.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-blue">Get in touch →</a>
       <a href="#agents" class="btn btn-outline">See the agents</a>
     </div>
     <div class="hero-stats">
-      <div class="hstat"><span class="hstat-n">45+</span><span class="hstat-l">mins saved per day</span></div>
-      <div class="hstat"><span class="hstat-n">30s</span><span class="hstat-l">to send an invoice</span></div>
-      <div class="hstat"><span class="hstat-n">$10K</span><span class="hstat-l">compliance fine avoided</span></div>
+      <div class="hstat"><span class="hstat-n">30–50</span><span class="hstat-l">hrs saved per week across your team</span></div>
+      <div class="hstat"><span class="hstat-n">2 min</span><span class="hstat-l">to generate a SWMS</span></div>
+      <div class="hstat"><span class="hstat-n">$10K+</span><span class="hstat-l">compliance fines avoided</span></div>
     </div>
   </div>
   <div class="hero-right">
@@ -440,16 +452,24 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
 
 <div class="ticker">
   <div class="ticker-inner">
-    <span class="ticker-item"><span class="ticker-sep">→</span> Invoice in 30 seconds</span>
-    <span class="ticker-item"><span class="ticker-sep">→</span> SWMS in 2 minutes</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Automate your entire ops</span>
     <span class="ticker-item"><span class="ticker-sep">→</span> Quote before you leave the driveway</span>
-    <span class="ticker-item"><span class="ticker-sep">→</span> Built for Australian tradies</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> SWMS in 2 minutes</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Invoice in 30 seconds</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Built for trades &amp; construction</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Sydney-based team</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Agentic + deterministic AI</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Full ops automation</span>
     <span class="ticker-item"><span class="ticker-sep">→</span> SafeWork NSW compliant</span>
     <span class="ticker-item"><span class="ticker-sep">→</span> Xero integrated</span>
-    <span class="ticker-item"><span class="ticker-sep">→</span> Invoice in 30 seconds</span>
-    <span class="ticker-item"><span class="ticker-sep">→</span> SWMS in 2 minutes</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Automate your entire ops</span>
     <span class="ticker-item"><span class="ticker-sep">→</span> Quote before you leave the driveway</span>
-    <span class="ticker-item"><span class="ticker-sep">→</span> Built for Australian tradies</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> SWMS in 2 minutes</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Invoice in 30 seconds</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Built for trades &amp; construction</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Sydney-based team</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Agentic + deterministic AI</span>
+    <span class="ticker-item"><span class="ticker-sep">→</span> Full ops automation</span>
     <span class="ticker-item"><span class="ticker-sep">→</span> SafeWork NSW compliant</span>
     <span class="ticker-item"><span class="ticker-sep">→</span> Xero integrated</span>
   </div>
@@ -463,6 +483,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
       <div class="prob-card rv d1"><span class="prob-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span><div><h4>Manual invoicing kills your evenings</h4><p>45+ minutes every night writing up invoices, chasing payments, logging jobs into Xero — after a full day on the tools.</p></div></div>
       <div class="prob-card rv d2"><span class="prob-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span><div><h4>Compliance paperwork is a legal minefield</h4><p>SafeWork NSW/VIC requires SWMS, hazard logs, toolbox talk records. Miss one and you're looking at a $10,000+ fine.</p></div></div>
       <div class="prob-card rv d3"><span class="prob-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></span><div><h4>Slow quotes = losing jobs to competitors</h4><p>You go home, spend an hour building a quote. By the time you send it, the client has already hired someone else.</p></div></div>
+      <div class="prob-card rv d3"><span class="prob-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span><div><h4>Manual processes are costing your business</h4><p>Mid-size trade firms lose 30–50 hours per week across their team to admin, quoting, compliance, and reporting. That's money walking out the door every single week.</p></div></div>
     </div>
     <div class="prob-visual rv d2">
       <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=82" alt="Australian builder sitting on site drowning in manual compliance paperwork" width="414" height="460" loading="lazy" decoding="async">
@@ -474,8 +495,8 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
 
 <section class="agents" id="agents">
   <div class="sec-head rv">
-    <div><span class="tag">The solution</span><h2>3 Specialized AI Agents Built for Your Trade Business</h2></div>
-    <p class="sub">Each agent handles one major pain point. Click any agent to get started — we'll reach out personally.</p>
+    <div><span class="tag">The solution</span><h2>3 Core Agents + Full Business Automation</h2></div>
+    <p class="sub">Start with a single agent or let us automate your entire operation. We work with solo tradies and multi-crew construction firms.</p>
   </div>
   <div class="agents-grid">
     <div class="acard ac-dark rv d1">
@@ -509,10 +530,45 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
   </div>
 </section>
 
+<section class="firms rv" id="firms">
+  <div class="sec-head rv">
+    <div><span class="tag">For Firms</span><h2>We Automate Your Entire Operation. Not Just One Task.</h2></div>
+    <p class="sub">We go into your business, map every manual process, and build AI systems to eliminate it. Delivered in 2 weeks — not 6 months.</p>
+  </div>
+  <div class="firms-grid">
+    <div class="firm-card rv d1">
+      <h3>Automation Audit</h3>
+      <p>We map your entire ops and identify every manual process that can be automated. You get a clear report and fixed-price build quote.</p>
+      <span class="firm-price">$500–$1,500 one-off</span>
+    </div>
+    <div class="firm-card rv d2">
+      <h3>Custom Build</h3>
+      <p>2–5 automations built and deployed across quoting, invoicing, compliance, scheduling, or reporting. Integrated into your existing tools.</p>
+      <span class="firm-price">$3,000–$15,000</span>
+    </div>
+    <div class="firm-card rv d3">
+      <h3>Full Ops Overhaul</h3>
+      <p>End-to-end automation across your entire business. Quoting, invoicing, SWMS, scheduling, reporting, Xero. Everything. Delivered in 2 weeks.</p>
+      <span class="firm-price">$10,000–$25,000+</span>
+    </div>
+  </div>
+  <div class="firm-tags">
+    <span class="firm-tag">Electrical Contractors</span>
+    <span class="firm-tag">Plumbing Firms</span>
+    <span class="firm-tag">Construction Companies</span>
+    <span class="firm-tag">Landscapers</span>
+    <span class="firm-tag">Roofing Companies</span>
+    <span class="firm-tag">Subcontractors</span>
+  </div>
+  <div class="firms-cta">
+    <a href="#contact" class="btn btn-blue">Book a free discovery call →</a>
+  </div>
+</section>
+
 <section class="custom-agent" id="custom">
   <div class="sec-head rv">
-    <div><span class="tag" style="color:#6b9fff">Beyond the standard</span><h2>Need something<br>built just for you?</h2></div>
-    <p class="sub">We build bespoke AI agents tailored to your exact trade, workflow, and business. If you can describe it, we can build it.</p>
+    <div><span class="tag" style="color:#6b9fff">Beyond the standard</span><h2>Need something built just for you?</h2></div>
+    <p class="sub">We build bespoke AI agents tailored to your exact trade, workflow, and business. If you can describe it, we can build it.<br><br>We've built for solo tradies, electrical contracting firms, landscaping companies, RTOs, and subcontractors. If you can describe it, we can build it — and deliver it in 2 weeks.</p>
   </div>
   <div class="ca-grid">
     <div class="ca-content rv d1">
@@ -557,7 +613,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
     <div class="how-step rv d1"><div class="how-step-n">01</div><div class="how-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></div><h4>Speak it</h4><p>After finishing a job, speak a quick voice memo. No typing, no forms.</p></div>
     <div class="how-step rv d2"><div class="how-step-n">02</div><div class="how-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div><h4>AI processes</h4><p>BlueCrewAI extracts job details, materials, and labour automatically.</p></div>
     <div class="how-step rv d3"><div class="how-step-n">03</div><div class="how-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div><h4>Doc generated</h4><p>Invoice, SWMS, or quote generated instantly. Professional and compliant.</p></div>
-    <div class="how-step rv d3"><div class="how-step-n">04</div><div class="how-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></div><h4>Sent &amp; logged</h4><p>Sent to client automatically. Logged to Xero. Automatic 7-Day SMS Client Follow-ups via Twilio.</p></div>
+    <div class="how-step rv d3"><div class="how-step-n">04</div><div class="how-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></div><h4>Sent, logged &amp; automated</h4><p>Sent to client automatically. Logged to Xero. Follow-up SMS scheduled. Or if you're a larger firm — synced to your full ops system.</p></div>
   </div>
 </section>
 
@@ -585,6 +641,7 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
     <div class="pcard rv d1"><span class="pcard-plan">Admin Agent</span><div class="pcard-price" data-m="$69" data-a="$55">$69</div><div class="pcard-per">per month · per tradie</div><p class="pcard-desc">Perfect for solo tradies who want to end the evening admin grind for good.</p><button class="pcard-btn" onclick="selectAgent('admin')">Get started →</button><ul class="pcard-feats"><li>Voice-to-invoice in 30 seconds</li><li>Auto email to client</li><li>Xero &amp; MYOB integration</li><li>Payment follow-up SMS</li><li>Job history dashboard</li></ul></div>
     <div class="pcard featured rv d2"><span class="pcard-plan">All Three Agents</span><div class="pcard-price" data-m="$249" data-a="$199">$249</div><div class="pcard-per">per month · full suite</div><p class="pcard-desc">Admin + Safety + Quote. Everything you need to run your trade business on autopilot.</p><button class="pcard-btn" onclick="selectAgent('bundle')">Get started →</button><ul class="pcard-feats"><li>All Admin Agent features</li><li>SWMS generator (SafeWork compliant)</li><li>Hazard photo reporting</li><li>Voice-to-quote on site</li><li>Stripe payment link in quotes</li><li>Priority support</li></ul></div>
     <div class="pcard rv d3"><span class="pcard-plan">Safety Agent</span><div class="pcard-price" data-m="$199" data-a="$159">$199</div><div class="pcard-per">per month · per site</div><p class="pcard-desc">For site foremen who need compliance handled without the paperwork grind.</p><button class="pcard-btn" onclick="selectAgent('safety')">Get started →</button><ul class="pcard-feats"><li>SWMS in 2 minutes</li><li>Photo to hazard report</li><li>Toolbox talk logs</li><li>SafeWork NSW/VIC compliant</li><li>Site manager dashboard</li></ul></div>
+    <div class="pcard rv d3"><span class="pcard-plan" style="color:var(--blue)">For Firms</span><div class="pcard-price" data-m="Custom" data-a="Custom">Custom</div><div class="pcard-per">per project · trade firms</div><p class="pcard-desc">For construction firms, electrical contractors, plumbers, and landscapers who want their entire operation automated.</p><button class="pcard-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book a call →</button><ul class="pcard-feats"><li>Automation audit included</li><li>2–10 custom automations built</li><li>Xero, MYOB, Procore integrations</li><li>Quoting, invoicing, SWMS, scheduling</li><li>Delivered in 2 weeks</li><li>Monthly retainer option</li></ul></div>
   </div>
 </section>
 
@@ -622,6 +679,8 @@ footer{background:var(--black);color:#9CA3AF;padding:64px 52px 32px}
           <label>Which agent are you interested in? <span class="req">*</span></label>
           <select id="agentSelect" required>
             <option value="" disabled selected>Select an agent...</option>
+            <option value="firm-ops">Full Ops Automation — I run a trade firm (custom quote)</option>
+            <option value="audit">Automation Audit — Map my business ($500–$1,500)</option>
             <option value="admin">Admin Agent — Voice-to-invoice ($69/mo)</option>
             <option value="safety">Safety Agent — SWMS &amp; compliance ($199/mo)</option>
             <option value="quote">Quote Agent — Instant quotes ($79/mo)</option>
@@ -690,7 +749,7 @@ function handleSubmit(e) {
   e.preventDefault();
   const btn = document.getElementById('submitBtn');
   const resp = document.getElementById('formResponse');
-  const agentLabels = { admin:'Admin Agent ($69/mo)', safety:'Safety Agent ($199/mo)', quote:'Quote Agent ($79/mo)', bundle:'All Three Agents ($249/mo)', custom:'Custom Agent Build', general:'General Enquiry' };
+  const agentLabels = { 'firm-ops':'Full Ops Automation (Trade Firm)', audit:'Automation Audit ($500–$1,500)', admin:'Admin Agent ($69/mo)', safety:'Safety Agent ($199/mo)', quote:'Quote Agent ($79/mo)', bundle:'All Three Agents ($249/mo)', custom:'Custom Agent Build', general:'General Enquiry' };
   const payload = {
     access_key: WEB3FORMS_KEY,
     subject: `BlueCrewAI Enquiry — ${agentLabels[document.getElementById('agentSelect').value]||'Unknown'} — ${document.getElementById('fullName').value}`,
